@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────────────────────
+# NETLIFY DEPLOYMENT CONFIGURATION
+# Centralized build, redirects, custom headers, and security
+# ─────────────────────────────────────────────────────────────
+
+[build]
+  # The directory containing the static entry point (index.html)
+  publish = "."
+
+# ─── SPA REWRITES & REDIRECTS ─────────────────────────────────
+# Route all subroutes to index.html with a 200 rewrite status.
+# This allows dynamic sub-page refreshes to resolve correctly.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ─── GLOBAL SECURITY HEADERS ──────────────────────────────────
+# Inject security headers for all paths to secure against clickjacking,
+# MIME-sniffing, and cross-site scripting vulnerabilities.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Content Security Policy (CSP): Allows Google Fonts and local scripts
+    Content-Security-Policy = "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; script-src 'self' 'unsafe-inline';"
+
+# ─── PERFORMANCE & ASSET CACHING ──────────────────────────────
+# Force long-term caching for immutable static assets to improve
+# Core Web Vitals (Largest Contentful Paint and Interaction to Next Paint).
+[[headers]]
+  for = "/style.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/main.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/data.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/graph.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

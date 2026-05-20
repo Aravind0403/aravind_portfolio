@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aravind Sundaresan · Infrastructure Engineer</title>
+  <meta name="description"
+    content="Infrastructure & Distributed Systems Engineer. Ex-Microsoft, Ex-Amazon. 7+ years building platforms at scale. ServiceScope, ACO, Clairvoyant Scheduler." />
+  <meta property="og:title" content="Aravind Sundaresan · Infrastructure Engineer" />
+  <meta property="og:description"
+    content="Ex-Microsoft, Ex-Amazon. Building AI-native tooling for distributed systems problems." />
+  <meta property="og:url" content="https://aravindsundaresan.dev" />
+  <meta property="og:image" content="og-preview.png" />
+  <meta property="og:type" content="website" />
+  <!-- Favicon — initials, no extra file needed -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231a56ff'/><text x='50%25' y='54%25' font-family='sans-serif' font-size='14' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='middle'>AS</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <!-- Prevent FOUC: apply saved theme before paint -->
+  <script>
+    (function () {
+      var s = localStorage.getItem('portfolio-theme');
+      var p = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', s || p);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Structured data for search engines / ATS crawlers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aravind Sundaresan",
+    "jobTitle": "Infrastructure Engineer",
+    "description": "Infrastructure & Distributed Systems Engineer with 7+ years. Ex-Microsoft R&D India, Ex-Amazon.",
+    "url": "https://aravindsundaresan.dev",
+    "email": "aravindsundaresan099@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Hyderabad", "addressCountry": "IN" },
+    "sameAs": [
+      "https://github.com/Aravind0403",
+      "https://linkedin.com/in/aravind-sundaresan",
+      "https://aravindsundaresan.substack.com"
+    ],
+    "alumniOf": [
+      { "@type": "Organization", "name": "Microsoft R&D India" },
+      { "@type": "Organization", "name": "Amazon" }
+    ],
+    "knowsAbout": [
+      "Distributed Systems", "Platform Infrastructure", "AI-Native Tooling",
+      "Event-Driven Architecture", "Concurrency Control", "Observability",
+      "CI/CD", "Device Orchestration", "LLM Inference Infrastructure",
+      "C#", "Java", "Python", "Go", "Azure", "AWS", "Redis", "Docker"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- ─── DOT-GRID TEXTURE ─────────────────────────────── -->
+  <div class="bg-texture" aria-hidden="true"></div>
+
+  <!-- ─── DRAWER OVERLAY (mobile) ──────────────────────── -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <div class="layout">
+
+    <!-- ─── SIDEBAR ───────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar" aria-label="Site navigation">
+
+      <div class="sidebar-identity">
+        <div class="sidebar-avatar" aria-hidden="true">AS</div>
+        <span class="sidebar-name">Aravind Sundaresan</span>
+        <span class="sidebar-title">Infrastructure Engineer</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Page sections">
+        <a href="#hero" class="nav-link is-active" data-section="hero">Home</a>
+        <a href="#about" class="nav-link" data-section="about">About</a>
+        <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+        <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+        <a href="#research" class="nav-link" data-section="research">Research</a>
+        <a href="#writing" class="nav-link" data-section="writing">Writing</a>
+        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="resume.pdf" download class="sidebar-resume" aria-label="Download resume PDF">Resume / CV ↓</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+          <span class="theme-icon" aria-hidden="true"></span>
+          <span class="theme-label"></span>
+        </button>
+        <div class="sidebar-socials">
+          <a href="https://github.com/Aravind0403" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+          <a href="https://linkedin.com/in/aravind-sundaresan" target="_blank" rel="noopener"
+            aria-label="LinkedIn">LI</a>
+          <a href="https://aravindsundaresan.substack.com" target="_blank" rel="noopener" aria-label="Substack">SS</a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ─── MOBILE HEADER ─────────────────────────────── -->
+    <header class="mobile-header" aria-label="Site header">
+      <span class="mobile-name">Aravind Sundaresan</span>
+      <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false"
+        aria-controls="sidebar">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <!-- ─── MAIN CONTENT ──────────────────────────────── -->
+    <main class="content" id="main-content">
+
+      <!-- HERO ─────────────────────────────────────────── -->
+      <section id="hero" class="hero reveal" aria-labelledby="hero-heading">
+
+        <!-- Decorative background glow for hero -->
+        <div class="hero-glow-container" aria-hidden="true">
+          <div class="hero-glow"></div>
+        </div>
+
+        <p class="hero-intro">
+          Hi, I'm <a href="https://linkedin.com/in/aravindsundaresan" target="_blank"
+            rel="noopener">@aravindsundaresan</a>,
+        </p>
+
+        <h1 id="hero-heading">
+          Infrastructure Engineer who builds systems that <span class="hero-highlight">survive scale and failure.</span>
+        </h1>
+
+        <div class="hero-roles" aria-label="Specialisations">
+          <span class="role-pill active">Distributed Systems</span>
+          <span class="role-pill">Platform Infrastructure</span>
+          <span class="role-pill">AI-Native Tooling</span>
+          <span class="role-pill">AI Research</span>
+        </div>
+
+        <p class="hero-body" id="hero-body-text" aria-live="polite">
+          At Microsoft I ran a distributed validation platform across <strong>17,000+ microservices</strong> — reducing
+          manual audit toil by 70%. At Amazon I built the device infrastructure running Alexa 24/7 across 50+ physical
+          devices.
+          <br><br>
+          <em>This still feels like day one. Harder problems. Larger scale. End-to-end.</em>
+        </p>
+
+        <nav class="hero-ctas" aria-label="Quick links">
+          <a href="#experience">My path →</a>
+          <a href="#projects">What I build →</a>
+          <a href="#writing">My writing →</a>
+          <a href="#contact" class="cta-primary">Let's talk →</a>
+          <a href="resume.pdf" download class="cta-secondary">Resume ↓</a>
+        </nav>
+
+      </section>
+
+      <!-- ABOUT ────────────────────────────────────────── -->
+      <section id="about" class="reveal" aria-labelledby="about-heading">
+        <p class="section-label">// About</p>
+
+        <p class="about-body">
+          I'm an infrastructure engineer with 7+ years of end-to-end ownership — design through reliability. At
+          Microsoft and Amazon I built platforms that thousands of engineers depend on without thinking about it.
+          Self-healing systems. Deterministic automation. Infrastructure that disappears into the background.
+        </p>
+
+        <p class="about-body">
+          Since late 2023 I've been conducting independent AI infrastructure research — shipping three open-source systems
+          (<strong>Clairvoyant</strong>, <strong>ACO</strong>, <strong>ServiceScope</strong>) and preparing an arXiv
+          preprint targeting MLSys 2027. Both are fully local, privacy-first, and built for production reality — not demo
+          conditions.
+        </p>
+
+        <p class="about-body">
+          I'm looking for <strong>Senior Infrastructure or ML Systems roles</strong> where I can own hard problems
+          end-to-end. Based in Hyderabad — open to Bengaluru, Chennai, and international relocation (London, Singapore,
+          Amsterdam).
+        </p>
+
+        <div class="skills-row reveal-stagger" aria-label="Core skills">
+          <span class="skill-chip">Distributed Systems</span>
+          <span class="skill-chip">Event-Driven Architecture</span>
+          <span class="skill-chip">Concurrency Control</span>
+          <span class="skill-chip">Traffic Shaping</span>
+          <span class="skill-chip">Observability</span>
+          <span class="skill-chip">CI/CD Platforms</span>
+          <span class="skill-chip">Kubernetes</span>
+          <span class="skill-chip">Docker</span>
+          <span class="skill-chip">Terraform</span>
+          <span class="skill-chip">Device Orchestration</span>
+          <span class="skill-chip">Platform Reliability</span>
+          <span class="skill-chip">LLM Inference Infrastructure</span>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE ───────────────────────────────────── -->
+      <section id="experience" class="reveal" aria-labelledby="experience-heading">
+        <p class="section-label">// Work Experience</p>
+
+        <div id="experience-container"></div>
+
+      </section>
+
+      <!-- PROJECTS ──────────────────────────────────────── -->
+      <section id="projects" aria-labelledby="projects-heading">
+        <p class="section-label">// Projects</p>
+
+        <div id="projects-container"></div>
+
+      </section>
+
+      <!-- RESEARCH ──────────────────────────────────────── -->
+      <section id="research" aria-labelledby="research-heading">
+        <p class="section-label">// Active Research</p>
+
+        <div id="research-container"></div>
+
+      </section>
+
+      <!-- WRITING ───────────────────────────────────────── -->
+      <section id="writing" class="reveal" aria-labelledby="writing-heading">
+        <p class="section-label" id="writing-heading">// Writing</p>
+
+        <div id="writing-container" class="writing-entries"></div>
+
+      </section>
+
+      <!-- CONTACT ───────────────────────────────────────── -->
+      <section id="contact" class="reveal" aria-labelledby="contact-heading">
+        <p class="section-label">// Let's talk</p>
+
+        <h2 id="contact-heading">Looking for Senior Infra roles where I can own hard problems end-to-end.</h2>
+
+        <p class="contact-body">
+          Open to distributed systems, platform infrastructure, and AI-native tooling roles. Based in Hyderabad — open
+          to Bengaluru, Chennai, and international relocation (London, Singapore, Amsterdam). I write code, design
+          systems, and care deeply about reliability.
+        </p>
+
+        <div class="contact-links">
+          <a href="mailto:aravindsundaresan099@gmail.com" class="c-link">
+            <span class="c-icon" aria-hidden="true">✉</span>
+            aravindsundaresan099@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/aravind-sundaresan" target="_blank" rel="noopener" class="c-link">
+            <span class="c-icon" aria-hidden="true">in</span>
+            linkedin.com/in/aravind-sundaresan
+          </a>
+          <a href="https://github.com/Aravind0403" target="_blank" rel="noopener" class="c-link">
+            <span class="c-icon" aria-hidden="true">&lt;/&gt;</span>
+            github.com/Aravind0403
+          </a>
+          <a href="https://aravindsundaresan.substack.com" target="_blank" rel="noopener" class="c-link">
+            <span class="c-icon" aria-hidden="true">✍</span>
+            aravindsundaresan.substack.com
+          </a>
+        </div>
+
+      </section>
+
+      <!-- FOOTER ────────────────────────────────────────── -->
+      <footer>
+        <span class="footer-copy">© 2025 Aravind Sundaresan</span>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="https://github.com/Aravind0403" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/aravind-sundaresan" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://aravindsundaresan.substack.com" target="_blank" rel="noopener">Substack</a>
+        </nav>
+      </footer>
+
+    </main><!-- /content -->
+
+  </div><!-- /layout -->
+
+  <script src="data.js" defer></script>
+  <script src="main.js" defer></script>
+  <script src="graph.js" defer></script>
+
+  <!-- ATS / no-JS fallback: invisible when JS runs, indexed by crawlers that don't execute JS -->
+  <noscript>
+    <div style="padding:48px 32px;font-family:Georgia,serif;max-width:760px;margin:auto;line-height:1.75">
+      <h1>Aravind Sundaresan — Infrastructure Engineer</h1>
+      <p>7+ years building distributed systems and platform infrastructure. Ex-Microsoft R&D India (Software Engineer II, Aug 2021–Nov 2023). Ex-Amazon (Software Engineer — Test &amp; Device Infrastructure, Sep 2017–Aug 2021). Based in Hyderabad, open to relocation.</p>
+      <h2>Work Experience</h2>
+      <p><strong>Microsoft R&amp;D India — Software Engineer II (Aug 2021–Nov 2023):</strong> Distributed metadata platform across 17,000+ microservices. Redis adaptive concurrency control. Azure BCDR active-passive. ARM64 Windows Validation Pipeline. RPA automation reducing UI defects ~40%.</p>
+      <p><strong>Amazon — Software Engineer, Test &amp; Device Infrastructure (Sep 2017–Aug 2021):</strong> Java scheduler for 50+ Alexa physical devices 24/7. ADB log diagnostic tooling adopted by 7+ teams. 98%+ platform uptime. 1,000+ QA hours saved per year.</p>
+      <h2>Open-Source Projects</h2>
+      <p><strong>ServiceScope:</strong> AI-native blast-radius analysis for Python microservices using AST walking and local LLM inference. Python, FastAPI, Celery, PostgreSQL, Neo4j, Ollama, Redis, Docker.</p>
+      <p><strong>ACO — Adaptive Compute Orchestrator:</strong> Predictive job scheduler with LSTM per-node predictors and ant-colony optimisation. Python, FastAPI, PyTorch, Asyncio. 202 tests passing.</p>
+      <p><strong>Clairvoyant Scheduler (Research):</strong> XGBoost classifier predicting LLM output complexity to prevent head-of-line blocking in vLLM. Go, ONNX Runtime, Python.</p>
+      <h2>Core Skills</h2>
+      <p>Distributed Systems · Event-Driven Architecture · Concurrency Control · Traffic Shaping · Observability · CI/CD Platforms · Device Orchestration · Platform Reliability · LLM Inference Infrastructure · C# · Java · Python · Go · Azure (Service Bus, Cosmos DB, Functions, ADX) · AWS (EC2, Lambda) · Redis · PostgreSQL · Neo4j · FastAPI · Celery · Docker · Alembic</p>
+      <h2>Contact</h2>
+      <p>Email: aravindsundaresan099@gmail.com · LinkedIn: linkedin.com/in/aravind-sundaresan · GitHub: github.com/Aravind0403 · Substack: aravindsundaresan.substack.com</p>
+    </div>
+  </noscript>
+
+</body>
+
+</html>

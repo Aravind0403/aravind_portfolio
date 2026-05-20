@@ -1,0 +1,4 @@
+# SPA Rewrite Rule for Netlify Deployment
+# This ensures all subpaths rewrite to the main index.html file with a 200 rewrite status,
+# allowing client-side routing to function seamlessly on reload or direct access.
+/*    /index.html   200
