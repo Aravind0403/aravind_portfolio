@@ -32,21 +32,26 @@
 # Configure caching to revalidate on Netlify deploys.
 # This prevents permanent browser caching and guarantees instant deploy updates.
 [[headers]]
-  for = "/style.css"
+  for = "/style.v2.css"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/main.js"
+  for = "/main.v2.js"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/data.js"
+  for = "/data.v2.js"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/graph.js"
+  for = "/graph.v2.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/simulations.v2.js"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
