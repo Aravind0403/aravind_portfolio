@@ -263,6 +263,8 @@
     }
 
     updateMetrics(dt) {
+      if (!this.holVal || !this.p99Val || !this.tputVal) return;
+
       if (this.mode === 'fifo') {
         // FIFO has massive HOL blocking under long jobs
         const longRunning = this.slots.some(s => s.job?.type === 'long');
@@ -635,6 +637,8 @@
     }
 
     updateMetrics() {
+      if (!this.utilVal || !this.slaVal || !this.costVal) return;
+
       if (this.mode === 'static') {
         // Static allocation has fragmentation and high SLA delays
         const totalCores = this.nodes.length;
@@ -751,7 +755,10 @@
   // 3. INITIALIZE ENGINE ON DEMAND & BOOT ON READY
   // ─────────────────────────────────────────────────────────────────────────────
 
+  let initialized = false;
   function boot() {
+    if (initialized) return;
+    initialized = true;
     new ClairvoyantSim();
     new AcoSim();
   }

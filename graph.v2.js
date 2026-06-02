@@ -70,7 +70,10 @@
 
   // ─── INIT ────────────────────────────────────────────────────────────────────
 
+  let initialized = false;
   function init() {
+    if (initialized) return;
+    initialized = true;
     canvas    = document.getElementById('serviceGraph');
     infoStrip = document.getElementById('graphInfoStrip');
     infoText  = document.getElementById('graphInfoText');

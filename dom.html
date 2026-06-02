@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aravind Sundaresan · Distributed Systems &amp; ML Infrastructure Engineer</title>
+  <meta name="description" content="Distributed Systems &amp; ML Infrastructure Engineer. Microsoft, Ex-Amazon. 7+ years building platforms at scale. Clairvoyant Scheduler, ACO, ServiceScope.">
+  <meta property="og:title" content="Aravind Sundaresan · Distributed Systems &amp; ML Infrastructure Engineer">
+  <meta property="og:description" content="Microsoft, Ex-Amazon. Building scalable LLM inference infrastructure, GPU scheduling systems, and Kubernetes orchestration.">
+  <meta property="og:url" content="https://aravindsundaresan.dev">
+  <meta property="og:image" content="og-preview.png">
+  <meta property="og:type" content="website">
+  <!-- Favicon — initials, no extra file needed -->
+  <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;rect width='32' height='32' rx='6' fill='%231a56ff'/&gt;&lt;text x='50%25' y='54%25' font-family='sans-serif' font-size='14' font-weight='700' fill='white' text-anchor='middle' dominant-baseline='middle'&gt;AS&lt;/text&gt;&lt;/svg&gt;">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&amp;family=DM+Mono:wght@300;400;500&amp;family=Bricolage+Grotesque:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+  <!-- Prevent FOUC: apply saved theme before paint -->
+  <script>
+    (function () {
+      var s = localStorage.getItem('portfolio-theme');
+      var p = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', s || p);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="style.v2.css">
+
+  <!-- Structured data for search engines / ATS crawlers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Aravind Sundaresan",
+    "jobTitle": "Distributed Systems & ML Infrastructure Engineer",
+    "description": "Distributed Systems & ML Infrastructure Engineer with 7+ years of experience. Microsoft, Ex-Amazon R&D India.",
+    "url": "https://aravindsundaresan.dev",
+    "email": "aravindsundaresan099@gmail.com",
+    "address": { "@type": "PostalAddress", "addressLocality": "Hyderabad", "addressCountry": "IN" },
+    "sameAs": [
+      "https://github.com/Aravind0403",
+      "https://linkedin.com/in/aravind-sundaresan",
+      "https://aravindsundaresan.substack.com"
+    ],
+    "alumniOf": [
+      { "@type": "Organization", "name": "Microsoft R&D India" },
+      { "@type": "Organization", "name": "Amazon" }
+    ],
+    "knowsAbout": [
+      "Distributed Systems", "ML Infrastructure", "GPU Cluster Scheduling",
+      "LLM Inference Optimization", "vLLM serving optimization", "ONNX Runtime",
+      "Concurrency Control", "Redis locking patterns", "Observability platforms",
+      "AST compilation analysis", "Java scheduler", "Python", "Go", "C#", "C++",
+      "Azure Service Bus", "Cosmos DB BCDR", "AWS orchestration", "Docker", "Kubernetes"
+    ]
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- ─── DOT-GRID TEXTURE ─────────────────────────────── -->
+  <div class="bg-texture" aria-hidden="true"></div>
+
+  <!-- ─── DRAWER OVERLAY (mobile) ──────────────────────── -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <div class="layout">
+
+    <!-- ─── SIDEBAR ───────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar" aria-label="Site navigation">
+
+      <div class="sidebar-identity">
+        <div class="sidebar-avatar" aria-hidden="true">AS</div>
+        <span class="sidebar-name">Aravind Sundaresan</span>
+        <span class="sidebar-title">Distributed Systems &amp; ML Infra</span>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Page sections">
+        <a href="#hero" class="nav-link is-active" data-section="hero">Home</a>
+        <a href="#about" class="nav-link" data-section="about">Focus</a>
+        <a href="#projects" class="nav-link" data-section="projects">Systems Projects</a>
+        <a href="#writing" class="nav-link" data-section="writing">Technical Writing</a>
+        <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+        <a href="#research" class="nav-link" data-section="research">Research Interests</a>
+        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="resume.pdf" download="" class="sidebar-resume" aria-label="Download resume PDF">Resume / CV ↓</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Switch to dark mode">
+          <span class="theme-icon" aria-hidden="true"></span>
+          <span class="theme-label"></span>
+        </button>
+        <div class="sidebar-socials">
+          <a href="https://github.com/Aravind0403" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path>
+            </svg>
+          </a>
+          <a href="https://linkedin.com/in/aravind-sundaresan" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+            </svg>
+          </a>
+          <a href="https://aravindsundaresan.substack.com" target="_blank" rel="noopener" aria-label="Substack">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ─── MOBILE HEADER ─────────────────────────────── -->
+    <header class="mobile-header" aria-label="Site header">
+      <span class="mobile-name">Aravind Sundaresan</span>
+      <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <!-- ─── MAIN CONTENT ──────────────────────────────── -->
+    <main class="content" id="main-content">
+
+      <!-- HERO ─────────────────────────────────────────── -->
+      <section id="hero" class="hero reveal is-visible" aria-labelledby="hero-heading">
+
+        <!-- Decorative background glow for hero -->
+        <div class="hero-glow-container" aria-hidden="true">
+          <div class="hero-glow"></div>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-left">
+            <p class="hero-intro">
+              Hi, I'm <a href="https://linkedin.com/in/aravind-sundaresan" target="_blank" rel="noopener">@aravindsundaresan</a>,
+            </p>
+
+            <h1 id="hero-heading">
+              Aravind Sundaresan
+            </h1>
+            <p class="hero-intro" style="font-size: 15px; font-weight: 600; color: var(--accent); margin-top: -10px; margin-bottom: 8px;">
+              Distributed Systems &amp; ML Infrastructure Engineer
+            </p>
+            <p class="hero-intro" style="font-size: 11.5px; font-weight: 500; color: var(--text-muted); margin-bottom: 20px;">
+              Microsoft • Ex-Amazon
+            </p>
+
+            <p class="hero-body" style="font-size: 14.5px; margin-bottom: 24px;">
+              Building scalable inference infrastructure, GPU scheduling systems, and Kubernetes-native orchestration platforms.
+            </p>
+
+            <div class="hero-focus-list" aria-label="Core focus areas">
+              <div class="hero-focus-item">
+                <span class="hero-focus-dot"></span>
+                LLM inference optimization
+              </div>
+              <div class="hero-focus-item">
+                <span class="hero-focus-dot"></span>
+                GPU cluster scheduling
+              </div>
+              <div class="hero-focus-item">
+                <span class="hero-focus-dot"></span>
+                Distributed systems
+              </div>
+              <div class="hero-focus-item">
+                <span class="hero-focus-dot"></span>
+                ML systems research
+              </div>
+            </div>
+
+            <nav class="hero-ctas" aria-label="Quick links" style="margin-top: 28px;">
+              <a href="#projects" class="cta-primary">View Projects →</a>
+              <a href="#writing" class="cta-secondary">Read Technical Writing</a>
+              <a href="https://github.com/Aravind0403" target="_blank" rel="noopener" class="cta-secondary">GitHub</a>
+              <a href="resume.pdf" download="" class="cta-secondary">Resume ↓</a>
+            </nav>
+          </div>
+
+          <div class="hero-right">
+            <!-- Simulated micro-terminal widget -->
+            <div class="hero-terminal" aria-hidden="true">
+              <div class="term-header">
+                <div class="term-dots">
+                  <span class="term-dot red"></span>
+                  <span class="term-dot yellow"></span>
+                  <span class="term-dot green"></span>
+                </div>
+                <span class="term-title">clairvoyant-daemon.sh</span>
+              </div>
+              <div class="term-body" id="term-body">
+                <!-- Lines will be dynamically generated by Javascript -->
+              <div class="term-line cmd">$ cl</div></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- FOCUS (ABOUT) ────────────────────────────────── -->
+      <section id="about" class="reveal" aria-labelledby="about-heading">
+        <p class="section-label">// Focus</p>
+
+        <div class="focus-split">
+          <div class="focus-left">
+            <p class="about-body">
+              I'm an infrastructure engineer with 7+ years of end-to-end ownership — designing, launching, and maintaining large-scale distributed backends. At Microsoft and Amazon, I engineered platforms that thousands of engineers depend on without second thoughts: highly resilient active-passive metadata databases, adaptive Redis concurrency throttles, and automated hardware scheduler fleets designed to self-heal.
+            </p>
+
+            <p class="about-body">
+              Since late 2023, my core direction has focused on <strong>ML systems and inference performance</strong>. I conduct active systems research to mitigate throughput bottlenecks in modern serving engines, shipping open-source scheduling fabrics (<strong>Clairvoyant</strong>, <strong>ACO</strong>, <strong>ServiceScope</strong>) designed for real-world production conditions with zero network or external API requirements.
+            </p>
+          </div>
+
+          <div class="focus-right">
+            <h3 style="font-size: 13.5px; font-family: var(--mono); color: var(--text); margin-top: 0; margin-bottom: 12px; font-weight: 600;">
+              [ SYSTEMS TOOLING DIRECTORY ]
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; border: 1px solid var(--border); padding: 18px; border-radius: 10px; background: var(--bg-2);">
+              <div>
+                <h4 style="font-size: 10.5px; font-family: var(--mono); color: var(--accent); margin-bottom: 6px; font-weight: 600;">// Systems Languages</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Go</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">C++</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Rust</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Python</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">C#</span>
+                </div>
+              </div>
+              <div>
+                <h4 style="font-size: 10.5px; font-family: var(--mono); color: var(--accent); margin-bottom: 6px; font-weight: 600;">// Orchestration &amp; Compute</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Kubernetes</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Docker</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">AWS</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Azure</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Terraform</span>
+                </div>
+              </div>
+              <div style="grid-column: 1 / -1; border-top: 1px solid var(--border); padding-top: 10px; margin-top: 2px;"></div>
+              <div style="margin-top: -6px;">
+                <h4 style="font-size: 10.5px; font-family: var(--mono); color: var(--accent); margin-bottom: 6px; font-weight: 600;">// ML Serving Runtimes</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">vLLM</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">ONNX Runtime</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">PyTorch</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Ollama</span>
+                </div>
+              </div>
+              <div style="margin-top: -6px;">
+                <h4 style="font-size: 10.5px; font-family: var(--mono); color: var(--accent); margin-bottom: 6px; font-weight: 600;">// Distributed Data &amp; Core</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Redis</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Celery</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">PostgreSQL</span>
+                  <span class="skill-chip" style="font-size: 9px; background: var(--bg);">Neo4j</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- FEATURED SYSTEMS PROJECTS ───────────────────── -->
+      <section id="projects" aria-labelledby="projects-heading">
+        <p class="section-label" id="projects-heading">// Featured Systems Projects</p>
+
+        <div id="projects-container">
+        <article class="project-card reveal" aria-labelledby="clairvoyant-heading">
+          <!-- Top Info Section -->
+          <div class="project-card-header">
+            <div class="project-card-top">
+              <h3 id="clairvoyant-heading" style="font-family: var(--display); font-weight: 700; font-size: 21px; margin-bottom: 2px;">Clairvoyant</h3>
+              <span class="status-pill status-research">Active ML Systems Research</span>
+            </div>
+            <div class="project-subtitle">Predictive Scheduling for LLM Inference Workloads</div>
+
+            <div class="project-problem">
+              <span class="project-problem-label">Core Systems Bottleneck</span>
+              <p class="project-problem-text">"Serial LLM inference engines experience severe head-of-line blocking when short, latency-critical requests get queued behind long-generation documents inside active processing batches."</p>
+            </div>
+          </div>
+          
+          <!-- Full-Width Simulator / Canvas Section -->
+          <div class="project-card-sim">
+            
+          <div class="sys-simulation" id="sim-clairvoyant" role="img" aria-label="Clairvoyant Scheduling Simulation">
+            <div class="sim-header">
+              <span class="sim-label">// SYSTEM SIMULATION — QUEUE TRAFFIC SHAPING</span>
+              <span class="sim-hint">Toggle scheduler mode to optimize P99 latencies</span>
+            </div>
+            <div class="sim-workspace">
+              <div class="sim-controls">
+                <button class="sim-btn active" id="btn-clairvoyant-fifo" data-mode="fifo">FIFO (vLLM Default)</button>
+                <button class="sim-btn" id="btn-clairvoyant-sjf" data-mode="sjf">Clairvoyant (XGBoost SJF)</button>
+              </div>
+              <div class="sim-visuals">
+                <canvas id="canvas-clairvoyant" width="633" height="200"></canvas>
+              </div>
+              <div class="sim-dashboard">
+                <div class="dash-metric">
+                  <span class="dash-val" id="clairvoyant-p99">0.0s</span>
+                   <span class="dash-lbl">P99 Latency</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="clairvoyant-throughput">0 req/s</span>
+                   <span class="dash-lbl">Throughput</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="clairvoyant-hol">Active</span>
+                   <span class="dash-lbl">HOL Blocking</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          </div>
+
+          <!-- Bottom Two-Column Details Grid -->
+          <div class="project-details-grid">
+            <!-- Left Column: Specs -->
+            <div class="project-details-left">
+              <div class="project-focus" aria-label="Project focus areas">
+                
+        <span class="project-focus-item">Queue optimization</span>
+      
+        <span class="project-focus-item">Predictive scheduling</span>
+      
+        <span class="project-focus-item">Inference orchestration</span>
+      
+        <span class="project-focus-item">Tail latency reduction</span>
+      
+              </div>
+              <p class="project-card-desc">An upstream traffic-shaper and priority bin-packer for LLM inference. Rather than modifying the core serving runtime, Clairvoyant sits upstream of the engine and uses an <strong>XGBoost classifier</strong> running on lightweight linguistic features to predict output sequence complexity (Short/Medium/Long) <em>before</em> generation begins. It enables Shortest-Job-First (SJF) and priority allocation, drastically reducing tail latency (P99) for interactive prompts.</p>
+              <ul class="project-bullets">
+                <li>Extracts prompt features (instruction tokens, keyword markers, semantic complexity cues) in the critical path with negligible microsecond overhead.</li><li>Trained high-accuracy XGBoost classifier on the ShareGPT corpus using balanced dataset profiles to ensure robust class prediction.</li><li>Engineered Go-based scheduler runtime loading the trained classifier via <strong>ONNX Runtime</strong> for high-throughput batch sorting.</li><li>Mitigates head-of-line blocking in multi-tenant contexts, decreasing short-request tail latency by up to 34% in synthetic workloads.</li>
+              </ul>
+            </div>
+
+            <!-- Right Column: Stats & Stack & Links -->
+            <div class="project-details-right">
+              <div class="metrics-row">
+                
+          <div class="m-item">
+            <span class="m-num counter" data-target="34" data-suffix="%" data-prefix="~" data-decimal="0">
+              ~34%
+            </span>
+            <span class="m-label">P99 short-job latency drop</span>
+          </div>
+        
+          <div class="m-item">
+            <span class="m-num counter" data-target="1.2" data-suffix="ms" data-prefix="&lt;" data-decimal="1">
+              &lt;1.2ms
+            </span>
+            <span class="m-label">inference prediction overhead</span>
+          </div>
+        
+          <div class="m-item">
+            <span class="m-num counter" data-target="94.2" data-suffix="%" data-prefix="" data-decimal="1">
+              94.2%
+            </span>
+            <span class="m-label">classification accuracy</span>
+          </div>
+        
+              </div>
+              <div class="stack-row stack-row--flush">
+                <span class="stack-tag">Go</span><span class="stack-tag">ONNX Runtime</span><span class="stack-tag">Python</span><span class="stack-tag">XGBoost</span><span class="stack-tag">vLLM</span><span class="stack-tag">Docker</span><span class="stack-tag">gRPC</span>
+              </div>
+              <div class="project-links">
+                
+        <a href="https://github.com/Aravind0403" target="_blank" rel="noopener" class="p-link">View on GitHub →</a>
+      
+              </div>
+            </div>
+          </div>
+        </article>
+      
+        <article class="project-card reveal" aria-labelledby="aco-heading">
+          <!-- Top Info Section -->
+          <div class="project-card-header">
+            <div class="project-card-top">
+              <h3 id="aco-heading" style="font-family: var(--display); font-weight: 700; font-size: 21px; margin-bottom: 2px;">ACO — Adaptive Compute Orchestrator</h3>
+              <span class="status-pill status-complete">Complete · Open Source</span>
+            </div>
+            <div class="project-subtitle">GPU Scheduling for Heterogeneous Clusters</div>
+
+            <div class="project-problem">
+              <span class="project-problem-label">Core Systems Bottleneck</span>
+              <p class="project-problem-text">"Static cluster placement policies trigger massive fragmentation and compute underutilization on heterogeneous GPU arrays during highly dynamic, multi-tenant burst workloads."</p>
+            </div>
+          </div>
+          
+          <!-- Full-Width Simulator / Canvas Section -->
+          <div class="project-card-sim">
+            
+          <div class="sys-simulation" id="sim-aco" role="img" aria-label="ACO Cluster Scheduler Simulation">
+            <div class="sim-header">
+              <span class="sim-label">// SYSTEM SIMULATION — HETEROGENEOUS GPU SCHEDULER</span>
+              <span class="sim-hint">Toggle placement algorithm to balance cluster loads</span>
+            </div>
+            <div class="sim-workspace">
+              <div class="sim-controls">
+                <button class="sim-btn active" id="btn-aco-static" data-mode="static">First-Fit (Static)</button>
+                <button class="sim-btn" id="btn-aco-colony" data-mode="colony">ACO Orchestrator</button>
+              </div>
+              <div class="sim-visuals">
+                <canvas id="canvas-aco" width="633" height="200"></canvas>
+              </div>
+              <div class="sim-dashboard">
+                <div class="dash-metric">
+                  <span class="dash-val" id="aco-util">0%</span>
+                  <span class="dash-lbl">GPU Utilization</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="aco-sla">100%</span>
+                  <span class="dash-lbl">SLA Adherence</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="aco-time">&lt;1ms</span>
+                  <span class="dash-lbl">Scheduling Cost</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          </div>
+
+          <!-- Bottom Two-Column Details Grid -->
+          <div class="project-details-grid">
+            <!-- Left Column: Specs -->
+            <div class="project-details-left">
+              <div class="project-focus" aria-label="Project focus areas">
+                
+        <span class="project-focus-item">Adaptive placement</span>
+      
+        <span class="project-focus-item">Scheduling heuristics</span>
+      
+        <span class="project-focus-item">Runtime-aware orchestration</span>
+      
+        <span class="project-focus-item">SLA-aware compute routing</span>
+      
+              </div>
+              <p class="project-card-desc">A predictive, decentralized job scheduler that maps variable workloads to heterogeneous GPU clusters. ACO combines ant-colony optimization metaheuristics with <strong>per-node LSTM predictors</strong> to forecast incoming queue burst times. Dynamic placement decisions are completed in <strong>&lt;8ms</strong> using two paths: a latency-critical Fast-Path (direct mathematical optimization) and a Full-Colony solver that runs parallel heuristic iterations under burst conditions.</p>
+              <ul class="project-bullets">
+                <li>Developed custom LSTM predictors using real-world Alibaba and Borg cluster telemetry traces, hot-refitting online parameters dynamically.</li><li>Engineered Fast-Path heuristics resolving compute routing in &lt;1ms to preserve sub-millisecond API response limits.</li><li>Implemented Ant Colony Optimization in NumPy, introducing early-stopping metrics after colony state convergence to eliminate overhead.</li><li>Tested scaling reliability using extensive pytest-asyncio suites under extreme synthetic queuing loads.</li>
+              </ul>
+            </div>
+
+            <!-- Right Column: Stats & Stack & Links -->
+            <div class="project-details-right">
+              <div class="metrics-row">
+                
+          <div class="m-item">
+            <span class="m-num counter" data-target="8" data-suffix="ms" data-prefix="&lt;" data-decimal="0">
+              &lt;8ms
+            </span>
+            <span class="m-label">P99 scheduling latency</span>
+          </div>
+        
+          <div class="m-item">
+            <span class="m-num counter" data-target="28" data-suffix="%" data-prefix="+" data-decimal="0">
+              +28%
+            </span>
+            <span class="m-label">GPU utilization vs First-Fit</span>
+          </div>
+        
+          <div class="m-item">
+            <span class="m-num counter" data-target="95" data-suffix="%+" data-prefix="" data-decimal="0">
+              95%+
+            </span>
+            <span class="m-label">workload SLA adherence</span>
+          </div>
+        
+              </div>
+              <div class="stack-row stack-row--flush">
+                <span class="stack-tag">Python</span><span class="stack-tag">FastAPI</span><span class="stack-tag">PyTorch LSTM</span><span class="stack-tag">NumPy</span><span class="stack-tag">Asyncio</span><span class="stack-tag">Borg 2019 Traces</span><span class="stack-tag">Alibaba 2018 Traces</span>
+              </div>
+              <div class="project-links">
+                
+        <a href="https://github.com/Aravind0403/ACO_Adaptive_Compute_Orchestrator" target="_blank" rel="noopener" class="p-link">View on GitHub →</a>
+      
+              </div>
+            </div>
+          </div>
+        </article>
+      
+        <article class="project-card reveal" aria-labelledby="servicescope-heading">
+          <!-- Top Info Section -->
+          <div class="project-card-header">
+            <div class="project-card-top">
+              <h3 id="servicescope-heading" style="font-family: var(--display); font-weight: 700; font-size: 21px; margin-bottom: 2px;">ServiceScope</h3>
+              <span class="status-pill status-complete">Complete · Open Source</span>
+            </div>
+            <div class="project-subtitle">Developer Infrastructure &amp; Dependency Observability</div>
+
+            <div class="project-problem">
+              <span class="project-problem-label">Core Systems Bottleneck</span>
+              <p class="project-problem-text">"Determining operational blast radius inside modular microservices requires heavy runtime tracing or invasive code configurations, leading to unmapped dynamic service calls."</p>
+            </div>
+          </div>
+          
+          <!-- Full-Width Simulator / Canvas Section -->
+          <div class="project-card-sim">
+            
+          <div class="graph-demo" role="img" aria-label="Interactive ServiceScope dependency graph demo">
+            <div class="graph-demo-header">
+              <span class="graph-demo-label">// live dependency graph — blast radius resolver</span>
+              <span class="graph-demo-hint">Click any service node to analyze dynamic callers</span>
+            </div>
+            <canvas id="serviceGraph" aria-label="Microservice dependency graph — click a node to see blast radius" width="633" height="260"></canvas>
+            <div class="graph-info-strip" id="graphInfoStrip">
+              <span class="graph-info-text" id="graphInfoText">Select a service to run blast-radius analysis</span>
+            </div>
+            <div class="graph-legend" aria-label="Graph legend">
+              <span class="legend-item">
+                <span class="legend-dot selected" aria-hidden="true"></span>Selected service
+               </span>
+              <span class="legend-item">
+                <span class="legend-dot blast" aria-hidden="true"></span>Downstream blast radius
+               </span>
+              <span class="legend-item">
+                <span class="legend-dot upstream" aria-hidden="true"></span>Upstream callers
+               </span>
+            </div>
+          </div>
+        
+          </div>
+
+          <!-- Bottom Two-Column Details Grid -->
+          <div class="project-details-grid">
+            <!-- Left Column: Specs -->
+            <div class="project-details-left">
+              <div class="project-focus" aria-label="Project focus areas">
+                
+        <span class="project-focus-item">AST-based compilation maps</span>
+      
+        <span class="project-focus-item">Observability tooling</span>
+      
+        <span class="project-focus-item">Static analysis</span>
+      
+        <span class="project-focus-item">Automated blast-radius profiling</span>
+      
+              </div>
+              <p class="project-card-desc">An observability tool providing blast-radius dependency analysis for complex microservice environments. ServiceScope checks out a target source repository, parses code hierarchies via <strong>Abstract Syntax Tree (AST)</strong> walking (~190 files/sec), and isolates dynamic outbound HTTP endpoints. It utilizes a <strong>fully local, privacy-first LLM (gemma3:4b)</strong> running on Ollama to resolve dynamic variables, mapping full system dependency flows into PostgreSQL and Neo4j without modifying a single line of production code.</p>
+              <ul class="project-bullets">
+                <li>Engineered high-speed Python AST walker extracting HTTP calls, connection profiles, and client configurations across complex codebases.</li><li>Implemented dynamic variable resolution via local LLM confidence grading, distinguishing deterministic routes from semantic estimates.</li><li>Designed asynchronous task routing using Celery with Redis backend, handling parallel workspace clones and graph updates gracefully.</li><li>Validated analysis across 2,800+ files with zero external API calls or network trace requirements.</li>
+              </ul>
+            </div>
+
+            <!-- Right Column: Stats & Stack & Links -->
+            <div class="project-details-right">
+              <div class="metrics-row">
+                
+          <div class="m-item">
+            <span class="m-num counter" data-target="190" data-suffix="/s" data-prefix="" data-decimal="0">
+              190/s
+            </span>
+            <span class="m-label">AST source files parsed</span>
+          </div>
+        
+          <div class="m-item">
+            <span class="m-num counter" data-target="0" data-suffix="" data-prefix="" data-decimal="0">
+              0
+            </span>
+            <span class="m-label">external network API calls</span>
+          </div>
+        
+          <div class="m-item">
+            <span class="m-num counter" data-target="95" data-suffix="%+" data-prefix="" data-decimal="0">
+              95%+
+            </span>
+            <span class="m-label">dynamic route resolution confidence</span>
+          </div>
+        
+              </div>
+              <div class="stack-row stack-row--flush">
+                <span class="stack-tag">Python</span><span class="stack-tag">FastAPI</span><span class="stack-tag">Celery</span><span class="stack-tag">Redis</span><span class="stack-tag">PostgreSQL</span><span class="stack-tag">Neo4j</span><span class="stack-tag">Ollama</span><span class="stack-tag">Docker Compose</span>
+              </div>
+              <div class="project-links">
+                
+        <a href="https://github.com/Aravind0403/ServiceScope-v2" target="_blank" rel="noopener" class="p-link">View on GitHub →</a>
+      
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      </section>
+
+      <!-- TECHNICAL WRITING ───────────────────────────── -->
+      <section id="writing" class="reveal" aria-labelledby="writing-heading">
+        <p class="section-label" id="writing-heading">// Technical Writing</p>
+
+        <div id="writing-container" class="writing-entries">
+        <a href="https://aravindsundaresan.substack.com/p/your-scheduler-is-lying-to-you-and" target="_blank" rel="noopener" class="writing-entry">
+          <div class="w-icon" aria-hidden="true">📉</div>
+          <div class="w-body">
+            <div class="w-meta">Substack · Distributed Systems</div>
+            <div class="w-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">Your Scheduler Is Lying to You (And Ants Fixed It)</div>
+            <div class="w-desc">An inside analysis of static placement failures under burst load—and why swarm-intelligence algorithms build resilient schedules.</div>
+          </div>
+        </a>
+      
+        <a href="https://aravindsundaresan.substack.com/p/what-does-your-code-actually-call" target="_blank" rel="noopener" class="writing-entry">
+          <div class="w-icon" aria-hidden="true">🔍</div>
+          <div class="w-body">
+            <div class="w-meta">Substack · Static Analysis</div>
+            <div class="w-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">What Does Your Code Actually Call?</div>
+            <div class="w-desc">Walking AST compilation trees to map outbound HTTP requests—and why localized LLM parsing beats regex for dynamic endpoints.</div>
+          </div>
+        </a>
+      
+        <a href="https://aravindsundaresan.substack.com/p/the-100-billion-question-that-started" target="_blank" rel="noopener" class="writing-entry">
+          <div class="w-icon" aria-hidden="true">📡</div>
+          <div class="w-body">
+            <div class="w-meta">Substack · Infrastructure</div>
+            <div class="w-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">The $100 Billion Question That Started With 27 Numbers</div>
+            <div class="w-desc">On the operational costs of configuration and metadata drift in microservices, and designing self-healing environments.</div>
+          </div>
+        </a>
+      
+        <a href="https://aravindsundaresan.substack.com" target="_blank" rel="noopener" class="writing-entry">
+          <div class="w-icon" aria-hidden="true">✍️</div>
+          <div class="w-body">
+            <div class="w-meta">Subscribe · Engineering at Scale</div>
+            <div class="w-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">All posts on Substack →</div>
+            <div class="w-desc">Distributed systems, infrastructure resilience, and ML systems. Practical designs, real-world failures.</div>
+          </div>
+        </a>
+      </div>
+
+      </section>
+
+      <!-- EXPERIENCE ───────────────────────────────────── -->
+      <section id="experience" class="reveal" aria-labelledby="experience-heading">
+        <p class="section-label" id="experience-heading">// Work Experience</p>
+
+        <div id="experience-container">
+        <div class="exp-entry experience-split">
+          <div class="exp-left">
+            <div class="exp-header">
+              <div class="exp-logo" aria-hidden="true"><svg viewBox="0 0 23 23" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="9.5" height="9.5" fill="#f25022"></rect><rect x="11.5" width="9.5" height="9.5" fill="#7fba00"></rect><rect y="11.5" width="9.5" height="9.5" fill="#01a4ef"></rect><rect x="11.5" y="11.5" width="9.5" height="9.5" fill="#ffb900"></rect></svg></div>
+              <div>
+                <h3 style="font-family: var(--display); font-weight: 700; font-size: 19px;">Microsoft R&amp;D India</h3>
+              </div>
+            </div>
+            <div class="exp-role">Software Engineer II</div>
+            <div class="exp-period">2021 – Present · Hyderabad, India</div>
+            <ul class="exp-bullets">
+              <li>Architected a <strong>distributed metadata platform</strong> (Service Tree Inventory) orchestrating live deployment truth across <strong>17,000+ microservices</strong> via Azure Service Bus and Cosmos DB.</li><li>Implemented a <strong>Redis-based adaptive concurrency control system</strong> utilizing 95% optimistic and 5% pessimistic locking strategies, successfully eliminating cascading retry storms under cluster outages.</li><li>Designed and engineered Azure-native <strong>BCDR (active-passive) recovery workflows</strong> with fully idempotent event pipelines, maintaining zero-data-loss RPO and sub-minute RTO failover.</li><li>Built the <strong>ARM64 Windows Validation Provisioner</strong>, utilizing parallel worker nodes to reduce device-under-test build deployment times from 60+ down to 20 minutes.</li><li>Automated critical OS telemetry validation using <strong>Windows OOBE RPA test executors</strong>, reducing post-release UI-related defects by ~40%.</li><li>Developed a low-overhead <strong>Test-in-Production (TIP) Telemetry Framework</strong> using C++ runtime hooks, adopted across 10 engineering groups to detect live execution bugs.</li>
+            </ul>
+          </div>
+          <div class="exp-right">
+            <div class="project-sub">
+              <div class="project-sub-top">
+                <span class="project-sub-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">Service Inventory &amp; Metadata Orchestration Platform</span>
+                <span class="status-pill status-complete">Production</span>
+              </div>
+              <p class="project-sub-desc">An event-driven enterprise metadata core designed to handle high burst traffic and maintain global state consistency across all Microsoft services. This served as the direct operational motivation for designing ServiceScope — creating a system to resolve implicit, runtime dependency chains without intrusive manual documentation.</p>
+              <div class="metrics-row">
+                
+        <div class="m-item">
+          <span class="m-num counter" data-target="17" data-suffix="K+">17K+</span>
+          <span class="m-label">microservices orchestrated</span>
+        </div>
+      
+        <div class="m-item">
+          <span class="m-num counter" data-target="70" data-suffix="%">70%</span>
+          <span class="m-label">deployment toil reduced</span>
+        </div>
+      
+        <div class="m-item">
+          <span class="m-num counter" data-target="99.99" data-suffix="%" data-decimal="2">99.99%</span>
+          <span class="m-label">metadata availability SLA</span>
+        </div>
+      
+              </div>
+              <div class="stack-row">
+                <span class="stack-tag">C#</span><span class="stack-tag">Azure Service Bus</span><span class="stack-tag">Cosmos DB</span><span class="stack-tag">Redis</span><span class="stack-tag">Azure Functions</span><span class="stack-tag">C++</span><span class="stack-tag">Kusto / ADX</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="exp-entry experience-split">
+          <div class="exp-left">
+            <div class="exp-header">
+              <div class="exp-logo" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg"><text x="12" y="14" font-family="sans-serif" font-weight="700" font-size="14" fill="currentColor" text-anchor="middle">a</text><path d="M4 16c4 3.5 12 3.5 16 0" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round" fill="none"></path><path d="M20 16l-2-1m2 1l-1 2" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round" fill="none"></path></svg></div>
+              <div>
+                <h3 style="font-family: var(--display); font-weight: 700; font-size: 19px;">Amazon</h3>
+              </div>
+            </div>
+            <div class="exp-role">Software Engineer — Test &amp; Device Infrastructure</div>
+            <div class="exp-period">2017 – 2023 · Chennai, India</div>
+            <ul class="exp-bullets">
+              <li>Engineered a high-throughput Java-based <strong>device scheduling engine</strong> orchestrating 24/7 deterministic integration and stress test suites across <strong>50+ physical Alexa devices</strong>.</li><li>Designed self-healing physical infrastructure resilience using ADB keepalive monitors, automated `adb reboot` recovery protocols, and instant failure backup routing.</li><li>Eliminated non-deterministic hardware testing failures by introducing automated state-clearing cycles, isolated Linux network layers, and runtime device health metrics.</li><li>Authored a unified monospaced <strong>ADB Log Triage &amp; Diagnostic tool</strong> in Python, aggregating multi-device system crash dumps and saving 1,000+ developer debugging hours annually.</li><li>Orchestrated cross-category firmware promotion scripts, automating multi-tenant release pipelines across diverse Alexa-enabled device architectures.</li>
+            </ul>
+          </div>
+          <div class="exp-right">
+            <div class="project-sub">
+              <div class="project-sub-top">
+                <span class="project-sub-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">Alexa Device Orchestration Platform</span>
+                <span class="status-pill status-complete">Production</span>
+              </div>
+              <p class="project-sub-desc">A distributed device-management fabric designed to assume hardware failure and orchestrate automated diagnostics under flaky network conditions. The system ensures continuous reliability metrics of physical devices without manual operator intervention.</p>
+              <div class="metrics-row">
+                
+        <div class="m-item">
+          <span class="m-num counter" data-target="50" data-suffix="+">50+</span>
+          <span class="m-label">physical devices active 24/7</span>
+        </div>
+      
+        <div class="m-item">
+          <span class="m-num counter" data-target="98.4" data-suffix="%" data-decimal="1">98.4%</span>
+          <span class="m-label">scheduler uptime</span>
+        </div>
+      
+        <div class="m-item">
+          <span class="m-num counter" data-target="1000" data-suffix="+">1000+</span>
+          <span class="m-label">QA hours saved / yr</span>
+        </div>
+      
+              </div>
+              <div class="stack-row">
+                <span class="stack-tag">Java</span><span class="stack-tag">Python</span><span class="stack-tag">AWS (EC2, Lambda, DynamoDB)</span><span class="stack-tag">Docker</span><span class="stack-tag">Linux Shell</span><span class="stack-tag">CI/CD</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="exp-entry experience-split">
+          <div class="exp-left">
+            <div class="exp-header">
+              <div class="exp-logo" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg"><circle cx="11.5" cy="11.5" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"></circle><path d="M 9.2 14.5 L 9.2 9 L 11.5 11.5 L 13.8 9 L 13.8 14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M 11.5 3 A 8.5 8.5 0 1 0 18.5 15 L 20 15 L 20 11.5 L 16.5 11.5" stroke="#0a8c43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path><path d="M 18 13.5 L 20 11.5 L 22 13.5" stroke="#0a8c43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path></svg></div>
+              <div>
+                <h3 style="font-family: var(--display); font-weight: 700; font-size: 19px;">OMG Labs</h3>
+              </div>
+            </div>
+            <div class="exp-role">Technical Lead</div>
+            <div class="exp-period">2016 – 2017 · Chennai, India</div>
+            <ul class="exp-bullets">
+              <li>Spearheaded customer acquisition through a subscription-based model, boosting customer traffic by 15–20% in key market segments.</li><li>Led end-to-end project delivery — from strategy and design to technical implementation and deployment.</li><li>Managed vendor relationships and integrated e-commerce tools such as site search and email marketing solutions, improving digital presence by 25–35%.</li><li>Played a key role in achieving Amazon Launchpad selection, positioning OMG Labs among top emerging startups for international expansion.</li><li>Coordinated across product, marketing, and tech teams to ensure agile execution and sustainable growth infrastructure.</li>
+            </ul>
+          </div>
+          <div class="exp-right">
+            <div class="project-sub">
+              <div class="project-sub-top">
+                <span class="project-sub-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">OMG Labs E-Commerce Expansion &amp; Subscription Orchestration</span>
+                <span class="status-pill status-complete">Production</span>
+              </div>
+              <p class="project-sub-desc">An integrated subscriber management core and digital presence ecosystem. Oversaw end-to-end infrastructure, partner service APIs, and digital tooling integrations that qualified the firm for Amazon Launchpad.</p>
+              <div class="metrics-row">
+                
+        <div class="m-item">
+          <span class="m-num counter" data-target="20" data-suffix="%" data-prefix="+">+20%</span>
+          <span class="m-label">customer traffic boost</span>
+        </div>
+      
+        <div class="m-item">
+          <span class="m-num counter" data-target="35" data-suffix="%" data-prefix="+">+35%</span>
+          <span class="m-label">digital presence growth</span>
+        </div>
+      
+        <div class="m-item">
+          <span class="m-num counter" data-target="100" data-suffix="%">100%</span>
+          <span class="m-label">Amazon Launchpad selection</span>
+        </div>
+      
+              </div>
+              <div class="stack-row">
+                <span class="stack-tag">Node.js</span><span class="stack-tag">React</span><span class="stack-tag">Stripe APIs</span><span class="stack-tag">AWS S3</span><span class="stack-tag">MongoDB</span><span class="stack-tag">Express</span><span class="stack-tag">Docker</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      </section>
+
+      <!-- RESEARCH INTERESTS ────────────────────────────── -->
+      <section id="research" class="reveal" aria-labelledby="research-heading">
+        <p class="section-label" id="research-heading">// Current Research Interests</p>
+
+        <div id="research-interests-container" class="research-grid">
+        <div class="research-card-item">
+          <div class="research-card-title">LLM inference scheduling</div>
+          <div class="research-card-desc">Developing pre-fill and decode phase schedulers that minimize tail latency and optimize chunked pre-fills.</div>
+        </div>
+      
+        <div class="research-card-item">
+          <div class="research-card-title">Queue-aware serving systems</div>
+          <div class="research-card-desc">Constructing scheduling middleware that coordinates with vLLM/TGI batching logic to mitigate head-of-line bottlenecks.</div>
+        </div>
+      
+        <div class="research-card-item">
+          <div class="research-card-title">GPU orchestration</div>
+          <div class="research-card-desc">Building Kubernetes-native custom controllers designed to route burst tasks onto heterogeneous GPU pools dynamically.</div>
+        </div>
+      
+        <div class="research-card-item">
+          <div class="research-card-title">Multi-tenant inference isolation</div>
+          <div class="research-card-desc">Exploring hardware-level and orchestration-level isolation to guarantee compute SLAs for high-priority tenants.</div>
+        </div>
+      
+        <div class="research-card-item">
+          <div class="research-card-title">Predictive workload scheduling</div>
+          <div class="research-card-desc">Leveraging online statistical models to forecast batch complexity and resize dynamic container bounds.</div>
+        </div>
+      
+        <div class="research-card-item">
+          <div class="research-card-title">Kubernetes-native ML infrastructure</div>
+          <div class="research-card-desc">Engineering lightweight schedulers and custom controllers targeting cloud GPU fleets.</div>
+        </div>
+      </div>
+
+      </section>
+
+      <!-- CONTACT ───────────────────────────────────────── -->
+      <section id="contact" class="reveal" aria-labelledby="contact-heading">
+        <p class="section-label">// Let's talk</p>
+
+        <h2 id="contact-heading">Focused on inference infrastructure, GPU scheduling, distributed systems, and ML-native orchestration.</h2>
+
+        <p class="contact-body">
+          Open to ML systems, platform infrastructure, and distributed compute engineering roles globally. Based in Hyderabad and open to relocation.
+        </p>
+
+        <div class="contact-links">
+          <a href="mailto:aravindsundaresan099@gmail.com" class="c-link">
+            <svg class="c-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path>
+            </svg>
+            aravindsundaresan099@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/aravind-sundaresan" target="_blank" rel="noopener" class="c-link">
+            <svg class="c-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+            </svg>
+            linkedin.com/in/aravind-sundaresan
+          </a>
+          <a href="https://github.com/Aravind0403" target="_blank" rel="noopener" class="c-link">
+            <svg class="c-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+            </svg>
+            github.com/Aravind0403
+          </a>
+          <a href="https://aravindsundaresan.substack.com" target="_blank" rel="noopener" class="c-link">
+            <svg class="c-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"></path>
+            </svg>
+            aravindsundaresan.substack.com
+          </a>
+        </div>
+
+      </section>
+
+      <!-- FOOTER ────────────────────────────────────────── -->
+      <footer>
+        <span class="footer-copy">© 2026 Aravind Sundaresan</span>
+        <nav class="footer-links" aria-label="Footer links">
+          <a href="https://github.com/Aravind0403" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://linkedin.com/in/aravind-sundaresan" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://aravindsundaresan.substack.com" target="_blank" rel="noopener">Substack</a>
+        </nav>
+      </footer>
+
+    </main><!-- /content -->
+
+  </div><!-- /layout -->
+
+  <script src="data.v2.js" defer=""></script>
+  <script src="main.v2.js" defer=""></script>
+  <script src="graph.v2.js" defer=""></script>
+  <script src="simulations.v2.js" defer=""></script>
+
+  <!-- ATS / no-JS fallback: invisible when JS runs, indexed by crawlers that don't execute JS -->
+  <noscript>
+    <div style="padding:48px 32px;font-family:Georgia,serif;max-width:760px;margin:auto;line-height:1.75">
+      <h1>Aravind Sundaresan — Infrastructure Engineer</h1>
+      <p>7+ years building distributed systems and platform infrastructure. Microsoft R&D India (Software Engineer II, 2021–Present). Ex-Amazon (Software Engineer — Test &amp; Device Infrastructure, 2017–2023). OMG Labs (Technical Lead, 2016–2017). Based in Hyderabad, open to relocation.</p>
+      <h2>Work Experience</h2>
+      <p><strong>Microsoft R&amp;D India — Software Engineer II (2021–Present):</strong> Distributed metadata platform across 17,000+ microservices. Redis adaptive concurrency control. Azure BCDR active-passive. ARM64 Windows Validation Pipeline. RPA automation reducing UI defects ~40%.</p>
+      <p><strong>Amazon — Software Engineer, Test &amp; Device Infrastructure (2017–2023):</strong> Java scheduler for 50+ Alexa physical devices 24/7. ADB log diagnostic tooling adopted by 7+ teams. 98%+ platform uptime. 1,000+ QA hours saved per year.</p>
+      <p><strong>OMG Labs — Technical Lead (2016–2017):</strong> Subscription-based customer acquisition models. Managed e-commerce tools and end-to-end strategy. Amazon Launchpad startup selection.</p>
+      <h2>Open-Source Projects</h2>
+      <p><strong>ServiceScope:</strong> AI-native blast-radius analysis for Python microservices using AST walking and local LLM inference. Python, FastAPI, Celery, PostgreSQL, Neo4j, Ollama, Redis, Docker.</p>
+      <p><strong>ACO — Adaptive Compute Orchestrator:</strong> Predictive job scheduler with LSTM per-node predictors and ant-colony optimisation. Python, FastAPI, PyTorch, Asyncio. 202 tests passing.</p>
+      <p><strong>Clairvoyant Scheduler (Research):</strong> XGBoost classifier predicting LLM output complexity to prevent head-of-line blocking in vLLM. Go, ONNX Runtime, Python.</p>
+      <h2>Core Skills</h2>
+      <p>Distributed Systems · Event-Driven Architecture · Concurrency Control · Traffic Shaping · Observability · CI/CD Platforms · Device Orchestration · Platform Reliability · LLM Inference Infrastructure · C# · Java · Python · Go · Azure (Service Bus, Cosmos DB, Functions, ADX) · AWS (EC2, Lambda) · Redis · PostgreSQL · Neo4j · FastAPI · Celery · Docker · Alembic</p>
+      <h2>Contact</h2>
+      <p>Email: aravindsundaresan099@gmail.com · LinkedIn: linkedin.com/in/aravind-sundaresan · GitHub: github.com/Aravind0403 · Substack: aravindsundaresan.substack.com</p>
+    </div>
+  </noscript>
+
+
+
+</body></html>

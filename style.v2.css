@@ -1317,29 +1317,30 @@ h3 {
 .c-link:hover .c-icon { color: var(--accent); }
 
 /* ─── REVEAL ANIMATIONS ──────────────────────────────────── */
-.reveal {
+/* Progressive enhancement: only hide elements if JS is loaded and running */
+.js-enabled .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
 }
 
-.reveal.is-visible {
+.js-enabled .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* Stagger child reveals */
-.reveal-stagger > * {
+.js-enabled .reveal-stagger > * {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
 }
 
-.reveal-stagger.is-visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0ms; }
-.reveal-stagger.is-visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 60ms; }
-.reveal-stagger.is-visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 120ms; }
-.reveal-stagger.is-visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 180ms; }
-.reveal-stagger.is-visible > *:nth-child(n+5) { opacity: 1; transform: translateY(0); transition-delay: 220ms; }
+.js-enabled .reveal-stagger.is-visible > *:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0ms; }
+.js-enabled .reveal-stagger.is-visible > *:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 60ms; }
+.js-enabled .reveal-stagger.is-visible > *:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 120ms; }
+.js-enabled .reveal-stagger.is-visible > *:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 180ms; }
+.js-enabled .reveal-stagger.is-visible > *:nth-child(n+5) { opacity: 1; transform: translateY(0); transition-delay: 220ms; }
 
 /* ─── FOOTER ─────────────────────────────────────────────── */
 footer {

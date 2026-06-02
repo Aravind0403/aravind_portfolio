@@ -16,7 +16,12 @@
   }
 
   function initTheme() {
-    const saved     = localStorage.getItem(THEME_KEY);
+    let saved = null;
+    try {
+      saved = localStorage.getItem(THEME_KEY);
+    } catch (e) {
+      console.warn('localStorage is blocked or unavailable:', e);
+    }
     const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     applyTheme(saved ?? preferred);
   }
@@ -28,7 +33,11 @@
       const current = document.documentElement.getAttribute('data-theme');
       const next    = current === 'dark' ? 'light' : 'dark';
       applyTheme(next);
-      localStorage.setItem(THEME_KEY, next);
+      try {
+        localStorage.setItem(THEME_KEY, next);
+      } catch (e) {
+        console.warn('localStorage is blocked or unavailable:', e);
+      }
     });
   }
 
@@ -519,9 +528,10 @@
     container.innerHTML = html;
   }
 
-  // ─── BOOT ────────────────────────────────────────────────────────────────────
-
+  let initialized = false;
   function boot() {
+    if (initialized) return;
+    initialized = true;
     initTheme();
     bindTheme();
     

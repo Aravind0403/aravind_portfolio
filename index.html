@@ -20,12 +20,18 @@
     href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@300;400;500&family=Bricolage+Grotesque:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
 
-  <!-- Prevent FOUC: apply saved theme before paint -->
+  <!-- Prevent FOUC & Enable Resilient Styles: apply theme and js flag before paint -->
   <script>
     (function () {
-      var s = localStorage.getItem('portfolio-theme');
-      var p = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', s || p);
+      try {
+        var s = localStorage.getItem('portfolio-theme');
+        var p = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', s || p);
+      } catch (e) {
+        var p = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', p);
+      }
+      document.documentElement.classList.add('js-enabled');
     })();
   </script>
 
