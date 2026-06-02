@@ -1073,6 +1073,46 @@ h3 {
 .p-link:hover { opacity: 0.7; }
 .p-link.muted { color: var(--text-muted); }
 
+/* ─── PROJECT DETAILS GRID ───────────────────────────────── */
+.project-details-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .project-details-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 40px;
+  }
+}
+
+.project-details-left,
+.project-details-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-details-right {
+  gap: 16px;
+}
+
+.project-details-right .metrics-row {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.project-details-right .stack-row {
+  margin-bottom: 0;
+}
+
+.project-details-right .project-links {
+  border-top: none;
+  padding-top: 0;
+  margin-top: 8px;
+}
+
 /* ─── GRAPH DEMO ─────────────────────────────────────────── */
 .graph-demo {
   margin: 20px 0;
@@ -1375,4 +1415,409 @@ footer {
 
 @media (min-width: 1280px) {
   .content { padding-left: 64px; }
+}
+
+/* ============================================================
+   SYSTEMS PORTFOLIO EXTENSIONS (HERO, SIMULATIONS, RESEARCH)
+   ============================================================ */
+
+/* ─── WIDER HERO LAYOUT ──────────────────────────────────── */
+#hero {
+  max-width: 900px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+  }
+}
+
+.hero-focus-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px 16px;
+  margin: 24px 0 32px;
+}
+
+@media (min-width: 480px) {
+  .hero-focus-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.hero-focus-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--text-mid);
+}
+
+.hero-focus-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ─── TERMINAL WIDGET ─────────────────────────────────────── */
+.hero-terminal {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 11px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  display: none; /* Desktop only */
+}
+
+@media (min-width: 900px) {
+  .hero-terminal {
+    display: block;
+  }
+}
+
+[data-theme="dark"] .hero-terminal {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+.term-header {
+  background: var(--bg-3);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.term-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.term-dot {
+  width: 7.5px;
+  height: 7.5px;
+  border-radius: 50%;
+}
+
+.term-dot.red    { background: #e53e3e; }
+.term-dot.yellow { background: #dd6b20; }
+.term-dot.green  { background: #38a169; }
+
+.term-title {
+  color: var(--text-muted);
+  font-size: 9.5px;
+}
+
+.term-body {
+  padding: 12px 14px;
+  height: 155px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5px;
+  color: var(--text-mid);
+  background: var(--bg-2);
+}
+
+.term-line {
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.term-line.cmd     { color: var(--text); }
+.term-line.info    { color: var(--accent); }
+.term-line.success { color: var(--accent-green); }
+.term-line.warn    { color: var(--accent-warm); }
+
+/* ─── SYSTEMS PAPER LAYOUT ELEMENTS ───────────────────────── */
+.project-subtitle {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: -8px;
+  margin-bottom: 14px;
+  letter-spacing: 0.01em;
+}
+
+.project-problem {
+  border-left: 2px solid var(--accent-warm);
+  padding-left: 14px;
+  margin: 16px 0 20px;
+  background: var(--bg-2);
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 0 6px 6px 0;
+}
+
+.project-problem-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent-warm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.project-problem-text {
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.65;
+  font-style: italic;
+}
+
+.project-focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-bottom: 18px;
+  padding: 8px 0;
+  border-top: 1px dotted var(--border);
+  border-bottom: 1px dotted var(--border);
+}
+
+.project-focus-item {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-mid);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.project-focus-item::before {
+  content: '■';
+  font-size: 6px;
+  color: var(--accent);
+}
+
+/* ─── INTERACTIVE SIMULATION WIDGETS ─────────────────────── */
+.sys-simulation {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg);
+  margin: 22px 0 26px;
+}
+
+.sim-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sim-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.sim-hint {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  color: var(--text-muted);
+}
+
+.sim-workspace {
+  display: flex;
+  flex-direction: column;
+}
+
+.sim-controls {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+}
+
+.sim-btn {
+  flex: 1;
+  padding: 8px;
+  font-size: 10px;
+  font-weight: 500;
+  font-family: var(--mono);
+  border-right: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-mid);
+  background: var(--bg-2);
+  transition: all var(--dur) var(--ease);
+}
+
+.sim-btn:last-child {
+  border-right: none;
+}
+
+.sim-btn:hover {
+  background: var(--bg-3);
+  color: var(--text);
+}
+
+.sim-btn.active {
+  background: var(--bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.sim-visuals {
+  background: var(--graph-bg);
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.sim-visuals canvas {
+  width: 100%;
+  height: 200px;
+  display: block;
+}
+
+.sim-dashboard {
+  display: flex;
+  background: var(--bg-2);
+}
+
+.dash-metric {
+  flex: 1;
+  padding: 10px 8px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.dash-metric:last-child {
+  border-right: none;
+}
+
+.dash-val {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--display);
+  letter-spacing: -0.01em;
+}
+
+.dash-lbl {
+  font-size: 8.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── RESEARCH INTERESTS GRID ───────────────────────────── */
+.research-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 4px;
+}
+
+@media (min-width: 600px) {
+  .research-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.research-card-item {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.research-card-item:hover {
+  transform: translateY(-1.5px);
+  border-color: var(--border-mid);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+}
+
+[data-theme="dark"] .research-card-item:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+}
+
+.research-card-title {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+.research-card-desc {
+  font-size: 12.5px;
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+
+/* ─── WIDESCREEN DESKTOP REAL ESTATE GRID (>=1100px) ─────── */
+@media (min-width: 1100px) {
+  :root {
+    --content-max: 1050px; /* Expand layout width limit */
+  }
+
+  section {
+    max-width: var(--content-max);
+  }
+
+  /* Focus Bio / Tooling Split Grid */
+  .focus-split {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  /* Project Details Grid (Expanded on Widescreen) */
+  .project-details-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+  }
+
+  .sim-visuals canvas {
+    height: 230px; /* Taller visualizer space on widescreen viewports */
+  }
+
+  /* Experience Bullets / Metrics Card Split Grid */
+  .experience-split {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 44px;
+    align-items: start;
+  }
+
+  .experience-split .project-sub {
+    margin-top: 0 !important;
+  }
+
+  /* Dense 3-Column Research Matrix */
+  .research-grid {
+    grid-template-columns: 1fr 1fr 1fr !important;
+  }
+
+  /* Sleek Double-Column Writing Grid */
+  .writing-entries {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
 }

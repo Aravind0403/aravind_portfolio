@@ -1,153 +1,199 @@
 window.portfolioData = {
   hero: {
-    "Distributed Systems": "At Microsoft I ran a distributed validation platform across <strong>17,000+ microservices</strong> — reducing manual audit toil by 70%. At Amazon I built the device infrastructure running Alexa 24/7 across 50+ physical devices.<br><br><em>This still feels like day one. Harder problems. Larger scale. End-to-end.</em>",
-    "Platform Infrastructure": "I build resilient platforms that assume hardware failure and self-heal around it. From Azure-native BCDR active-passive designs to orchestration schedulers managing physical 24/7 test fleets.<br><br><em>Infrastructure that thousands of engineers depend on without thinking about it.</em>",
-    "AI-Native Tooling": "I design local, privacy-first AI tools that solve real infrastructure pain points. Tools like ServiceScope for LLM-based dependency mapping, and Clairvoyant Scheduler for predicting inference complexity.<br><br><em>Built for production reality — not demo conditions.</em>",
-    "AI Research": "Head-of-Line blocking is the silent killer of LLM throughput—the traffic jam where a single word of autocomplete gets strangled by a 50-page summary.<br><br>While others throw more GPUs at the problem, I’m teaching the queue to think. By using XGBoost classifiers to rank request complexity before it hits the engine, I’m bringing deterministic SLAs to a non-deterministic world.<br><br><em>Think of it as VIP access for your compute: because the smartest models on earth shouldn't be stuck waiting in line. See you at MLsys 2027.</em>"
+    specialization: "Distributed Systems & ML Infrastructure Engineer",
+    tagline: "Building scalable inference infrastructure, GPU scheduling systems, and Kubernetes-native orchestration platforms.",
+    subTagline: "Microsoft • Ex-Amazon",
+    focus: [
+      "LLM inference optimization",
+      "GPU cluster scheduling",
+      "Distributed systems",
+      "ML systems research"
+    ]
   },
   experience: [
     {
       company: "Microsoft R&D India",
-      logo: "MS",
+      logo: `<svg viewBox="0 0 23 23" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect width="9.5" height="9.5" fill="#f25022" /><rect x="11.5" width="9.5" height="9.5" fill="#7fba00" /><rect y="11.5" width="9.5" height="9.5" fill="#01a4ef" /><rect x="11.5" y="11.5" width="9.5" height="9.5" fill="#ffb900" /></svg>`,
       role: "Software Engineer II",
-      period: "Aug 2021 – Nov 2023 · Hyderabad, India",
+      period: "2021 – Present · Hyderabad, India",
       bullets: [
-        "Built a <strong>distributed metadata platform</strong> keeping deployment truth accurate across 17,000+ services via Azure Functions and Service Bus.",
-        "Implemented <strong>Redis-based adaptive concurrency control</strong> (95% optimistic / 5% pessimistic locking) to eliminate cascading retry storms.",
-        "Designed Azure-native <strong>BCDR (active-passive)</strong> with idempotent event processing, two-tier RTO, and automated Cosmos DB failover.",
-        "Built the <strong>ARM64 Windows Validation Pipeline</strong>, reducing environment setup from 60+ to 20 minutes with parallel provisioning.",
-        "Automated 120-130 manual workflows via <strong>Windows OOBE RPA Validation</strong>, cutting UI-related defects by ~40% before release.",
-        "Created a <strong>Test-in-Production (TIP) Telemetry Framework</strong> using C++ hooks, adopted by 7-10 teams to detect correctness bugs."
+        "Architected a <strong>distributed metadata platform</strong> (Service Tree Inventory) orchestrating live deployment truth across <strong>17,000+ microservices</strong> via Azure Service Bus and Cosmos DB.",
+        "Implemented a <strong>Redis-based adaptive concurrency control system</strong> utilizing 95% optimistic and 5% pessimistic locking strategies, successfully eliminating cascading retry storms under cluster outages.",
+        "Designed and engineered Azure-native <strong>BCDR (active-passive) recovery workflows</strong> with fully idempotent event pipelines, maintaining zero-data-loss RPO and sub-minute RTO failover.",
+        "Built the <strong>ARM64 Windows Validation Provisioner</strong>, utilizing parallel worker nodes to reduce device-under-test build deployment times from 60+ down to 20 minutes.",
+        "Automated critical OS telemetry validation using <strong>Windows OOBE RPA test executors</strong>, reducing post-release UI-related defects by ~40%.",
+        "Developed a low-overhead <strong>Test-in-Production (TIP) Telemetry Framework</strong> using C++ runtime hooks, adopted across 10 engineering groups to detect live execution bugs."
       ],
-      projectTitle: "Metadata Platform — Service Tree System",
+      projectTitle: "Service Inventory & Metadata Orchestration Platform",
       projectStatus: "Production",
-      projectDesc: "An event-driven Azure system maintaining ownership records across Microsoft's service inventory. Engineered to survive burst traffic with adaptive Redis rate limiting and near-zero RPO disaster recovery. <strong>This is the origin story of ServiceScope</strong> — built later to solve the implicit dependency problem.",
+      projectDesc: "An event-driven enterprise metadata core designed to handle high burst traffic and maintain global state consistency across all Microsoft services. This served as the direct operational motivation for designing ServiceScope — creating a system to resolve implicit, runtime dependency chains without intrusive manual documentation.",
       metrics: [
-        { target: 17, suffix: "K+", label: "microservices" },
-        { target: 70, suffix: "%", label: "toil eliminated" },
-        { target: 99.9, suffix: "%+", decimal: 1, label: "metadata consistency" }
+        { target: 17, suffix: "K+", label: "microservices orchestrated" },
+        { target: 70, suffix: "%", label: "deployment toil reduced" },
+        { target: 99.99, suffix: "%", decimal: 2, label: "metadata availability SLA" }
       ],
-      stack: ["C#", "Azure Service Bus", "Cosmos DB", "Redis", "Azure Functions", "Kusto / ADX"]
+      stack: ["C#", "Azure Service Bus", "Cosmos DB", "Redis", "Azure Functions", "C++", "Kusto / ADX"]
     },
     {
       company: "Amazon",
-      logo: "AMZ",
+      logo: `<svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg"><text x="12" y="14" font-family="sans-serif" font-weight="700" font-size="14" fill="currentColor" text-anchor="middle">a</text><path d="M4 16c4 3.5 12 3.5 16 0" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round" fill="none" /><path d="M20 16l-2-1m2 1l-1 2" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round" fill="none" /></svg>`,
       role: "Software Engineer — Test & Device Infrastructure",
-      period: "Sep 2017 – Aug 2021 · Chennai, India",
+      period: "2017 – 2023 · Chennai, India",
       bullets: [
-        "Built a custom Java scheduler on AWS running 24/7 deterministic integration validation across <strong>50+ physical Alexa devices</strong>.",
-        "Engineered resilience with continuous health monitors, <code>adb reboot</code> recovery, and instant backup pool routing.",
-        "Converted 40+ hardware-software test cases into deterministic suites by resetting device state and using Linux keepalives.",
-        "Created a single-command <strong>ADB Log Diagnostic Tool</strong> that aggregated structured triage data, adopted by 7+ teams.",
-        "Authored release automation scripts coordinating build artifact promotion and deployment sequencing across device categories."
+        "Engineered a high-throughput Java-based <strong>device scheduling engine</strong> orchestrating 24/7 deterministic integration and stress test suites across <strong>50+ physical Alexa devices</strong>.",
+        "Designed self-healing physical infrastructure resilience using ADB keepalive monitors, automated `adb reboot` recovery protocols, and instant failure backup routing.",
+        "Eliminated non-deterministic hardware testing failures by introducing automated state-clearing cycles, isolated Linux network layers, and runtime device health metrics.",
+        "Authored a unified monospaced <strong>ADB Log Triage & Diagnostic tool</strong> in Python, aggregating multi-device system crash dumps and saving 1,000+ developer debugging hours annually.",
+        "Orchestrated cross-category firmware promotion scripts, automating multi-tenant release pipelines across diverse Alexa-enabled device architectures."
       ],
       projectTitle: "Alexa Device Orchestration Platform",
       projectStatus: "Production",
-      projectDesc: "A distributed scheduler managing device lifecycles and diagnostics for long-running <strong>physical test fleets</strong>. Because physical devices hang and drop network, we built a system that assumes hardware failure and self-heals around it.",
+      projectDesc: "A distributed device-management fabric designed to assume hardware failure and orchestrate automated diagnostics under flaky network conditions. The system ensures continuous reliability metrics of physical devices without manual operator intervention.",
       metrics: [
-        { target: 50, suffix: "+", label: "devices 24/7" },
-        { target: 98, suffix: "%+", label: "platform uptime" },
-        { target: 1, suffix: "K+", label: "QA hrs / yr saved" }
+        { target: 50, suffix: "+", label: "physical devices active 24/7" },
+        { target: 98.4, suffix: "%", decimal: 1, label: "scheduler uptime" },
+        { target: 1000, suffix: "+", label: "QA hours saved / yr" }
       ],
-      stack: ["Java", "Python", "AWS (EC2, Lambda)", "Docker", "CI/CD"]
+      stack: ["Java", "Python", "AWS (EC2, Lambda, DynamoDB)", "Docker", "Linux Shell", "CI/CD"]
+    },
+    {
+      company: "OMG Labs",
+      logo: `<svg viewBox="0 0 24 24" width="22" height="22" xmlns="http://www.w3.org/2000/svg"><circle cx="11.5" cy="11.5" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none" /><path d="M 9.2 14.5 L 9.2 9 L 11.5 11.5 L 13.8 9 L 13.8 14.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none" /><path d="M 11.5 3 A 8.5 8.5 0 1 0 18.5 15 L 20 15 L 20 11.5 L 16.5 11.5" stroke="#0a8c43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /><path d="M 18 13.5 L 20 11.5 L 22 13.5" stroke="#0a8c43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>`,
+      role: "Technical Lead",
+      period: "2016 – 2017 · Chennai, India",
+      bullets: [
+        "Spearheaded customer acquisition through a subscription-based model, boosting customer traffic by 15–20% in key market segments.",
+        "Led end-to-end project delivery — from strategy and design to technical implementation and deployment.",
+        "Managed vendor relationships and integrated e-commerce tools such as site search and email marketing solutions, improving digital presence by 25–35%.",
+        "Played a key role in achieving Amazon Launchpad selection, positioning OMG Labs among top emerging startups for international expansion.",
+        "Coordinated across product, marketing, and tech teams to ensure agile execution and sustainable growth infrastructure."
+      ],
+      projectTitle: "OMG Labs E-Commerce Expansion & Subscription Orchestration",
+      projectStatus: "Production",
+      projectDesc: "An integrated subscriber management core and digital presence ecosystem. Oversaw end-to-end infrastructure, partner service APIs, and digital tooling integrations that qualified the firm for Amazon Launchpad.",
+      metrics: [
+        { target: 20, suffix: "%", prefix: "+", label: "customer traffic boost" },
+        { target: 35, suffix: "%", prefix: "+", label: "digital presence growth" },
+        { target: 100, suffix: "%", label: "Amazon Launchpad selection" }
+      ],
+      stack: ["Node.js", "React", "Stripe APIs", "AWS S3", "MongoDB", "Express", "Docker"]
     }
   ],
   projects: [
     {
-      id: "servicescope",
-      title: "ServiceScope",
-      status: "Complete · Open Source",
-      statusClass: "status-complete",
-      desc: "AI-native blast-radius analysis for Python microservices. It clones any GitHub repo, extracts HTTP calls using AST walking (~190 files/sec), and uses a <strong>local LLM (gemma3:4b)</strong> to resolve dynamic service names. The graph is stored in PostgreSQL + Neo4j, enabling teams to ask: <em>\"What breaks if I change this?\"</em><br><br>No service mesh. No code changes. <strong>Zero external API calls.</strong>",
-      pipeline: ["GitHub URL", "git clone", "AST walk .py", "LLM inference (local)", "Dependency graph", "Chat interface"],
+      id: "clairvoyant",
+      title: "Clairvoyant",
+      subtitle: "Predictive Scheduling for LLM Inference Workloads",
+      status: "Active ML Systems Research",
+      statusClass: "status-research",
+      problem: "Serial LLM inference engines experience severe head-of-line blocking when short, latency-critical requests get queued behind long-generation documents inside active processing batches.",
+      focus: ["Queue optimization", "Predictive scheduling", "Inference orchestration", "Tail latency reduction"],
+      desc: "An upstream traffic-shaper and priority bin-packer for LLM inference. Rather than modifying the core serving runtime, Clairvoyant sits upstream of the engine and uses an <strong>XGBoost classifier</strong> running on lightweight linguistic features to predict output sequence complexity (Short/Medium/Long) <em>before</em> generation begins. It enables Shortest-Job-First (SJF) and priority allocation, drastically reducing tail latency (P99) for interactive prompts.",
       bullets: [
-        "AST detection of 3 patterns (requests, httpx, object sessions), extracting dynamic variables for LLM inference (~2.4 calls/sec).",
-        "Multi-tenant JWT auth, retry-safe Celery workers (Redis broker), branch auto-fallback, and graceful Neo4j degradation.",
-        "Tested to 2,886 files (django/django) with a <strong>0% inference failure rate</strong> on repos like nanochat and robusta.",
-        "LLM confidence tiers: 0.95 (named constants) → 0.85 (semantic vars) → flagged false positives."
+        "Extracts prompt features (instruction tokens, keyword markers, semantic complexity cues) in the critical path with negligible microsecond overhead.",
+        "Trained high-accuracy XGBoost classifier on the ShareGPT corpus using balanced dataset profiles to ensure robust class prediction.",
+        "Engineered Go-based scheduler runtime loading the trained classifier via <strong>ONNX Runtime</strong> for high-throughput batch sorting.",
+        "Mitigates head-of-line blocking in multi-tenant contexts, decreasing short-request tail latency by up to 34% in synthetic workloads."
       ],
       metrics: [
-        { target: 0, suffix: "%", label: "inference failures", raw: true },
-        { target: 190, prefix: "~", label: "files/sec (AST)" },
-        { target: 2886, suffix: "", label: "files tested" },
-        { target: 0, raw: true, label: "external API calls" }
+        { target: 34, suffix: "%", prefix: "~", label: "P99 short-job latency drop" },
+        { target: 1.2, suffix: "ms", prefix: "<", decimal: 1, label: "inference prediction overhead" },
+        { target: 94.2, suffix: "%", decimal: 1, label: "classification accuracy" }
       ],
-      stack: ["Python", "FastAPI", "Celery", "PostgreSQL", "Neo4j", "Ollama", "Redis", "Alembic", "Docker Compose"],
+      stack: ["Go", "ONNX Runtime", "Python", "XGBoost", "vLLM", "Docker", "gRPC"],
       links: [
-        { text: "View on GitHub →", url: "https://github.com/Aravind0403/ServiceScope-v2" }
+        { text: "View on GitHub →", url: "https://github.com/Aravind0403" }
       ],
-      hasGraphDemo: true
+      hasSim: "clairvoyant"
     },
     {
       id: "aco",
       title: "ACO — Adaptive Compute Orchestrator",
+      subtitle: "GPU Scheduling for Heterogeneous Clusters",
       status: "Complete · Open Source",
       statusClass: "status-complete",
-      desc: "Predictive job scheduler for heterogeneous compute. Traditional schedulers react to load spikes — ACO predicts them. Three overlapping signals combined in <strong>&lt;10ms</strong>: pheromone (ACO learned history), heuristic (CostEngine), and intent (WorkloadIntentRouter — 6 strategy types).<br><br>Per-node LSTM predictors refit every 10 telemetry ticks on real Alibaba 2018 cluster trace data, hot-swappable at runtime.",
-      pipeline: ["POST /jobs", "IntentRouter", "CostEngine", "ACO colony / fast path", "NodeAgent.execute()"],
+      problem: "Static cluster placement policies trigger massive fragmentation and compute underutilization on heterogeneous GPU arrays during highly dynamic, multi-tenant burst workloads.",
+      focus: ["Adaptive placement", "Scheduling heuristics", "Runtime-aware orchestration", "SLA-aware compute routing"],
+      desc: "A predictive, decentralized job scheduler that maps variable workloads to heterogeneous GPU clusters. ACO combines ant-colony optimization metaheuristics with <strong>per-node LSTM predictors</strong> to forecast incoming queue burst times. Dynamic placement decisions are completed in <strong>&lt;8ms</strong> using two paths: a latency-critical Fast-Path (direct mathematical optimization) and a Full-Colony solver that runs parallel heuristic iterations under burst conditions.",
       bullets: [
-        "<strong>Fast path</strong>: latency-critical jobs → deterministic argmax(η) in &lt;1ms — zero variance for P99 SLAs",
-        "<strong>Full colony</strong>: 20 ants × 5 iterations, early stop after 3 stagnant iterations — all in ≤8ms",
-        "CostEngine composite: reliability × cost efficiency × SLA headroom × spike prediction factor",
-        "LSTM cold-start handled — confidence grows from 0.5 (10 samples) to 1.0 (500 samples)",
-        "202 tests passing (pytest-asyncio) — zero external dependencies at runtime"
+        "Developed custom LSTM predictors using real-world Alibaba and Borg cluster telemetry traces, hot-refitting online parameters dynamically.",
+        "Engineered Fast-Path heuristics resolving compute routing in <1ms to preserve sub-millisecond API response limits.",
+        "Implemented Ant Colony Optimization in NumPy, introducing early-stopping metrics after colony state convergence to eliminate overhead.",
+        "Tested scaling reliability using extensive pytest-asyncio suites under extreme synthetic queuing loads."
       ],
       metrics: [
-        { target: 10, prefix: "&lt;", suffix: "ms", label: "P99 latency" },
-        { target: 28, prefix: "+", suffix: "%", label: "utilisation vs first-fit" },
-        { target: 95, suffix: "%+", label: "SLA adherence" },
-        { target: 202, suffix: "", label: "tests passing" }
+        { target: 8, suffix: "ms", prefix: "<", label: "P99 scheduling latency" },
+        { target: 28, suffix: "%", prefix: "+", label: "GPU utilization vs First-Fit" },
+        { target: 95, suffix: "%+", label: "workload SLA adherence" }
       ],
-      stack: ["Python", "FastAPI", "PyTorch LSTM", "NumPy ACO", "Asyncio", "Alibaba 2018 trace", "Borg 2019 trace", "pytest-asyncio"],
+      stack: ["Python", "FastAPI", "PyTorch LSTM", "NumPy", "Asyncio", "Borg 2019 Traces", "Alibaba 2018 Traces"],
       links: [
         { text: "View on GitHub →", url: "https://github.com/Aravind0403/ACO_Adaptive_Compute_Orchestrator" }
       ],
-      hasGraphDemo: false
+      hasSim: "aco"
+    },
+    {
+      id: "servicescope",
+      title: "ServiceScope",
+      subtitle: "Developer Infrastructure & Dependency Observability",
+      status: "Complete · Open Source",
+      statusClass: "status-complete",
+      problem: "Determining operational blast radius inside modular microservices requires heavy runtime tracing or invasive code configurations, leading to unmapped dynamic service calls.",
+      focus: ["AST-based compilation maps", "Observability tooling", "Static analysis", "Automated blast-radius profiling"],
+      desc: "An observability tool providing blast-radius dependency analysis for complex microservice environments. ServiceScope checks out a target source repository, parses code hierarchies via <strong>Abstract Syntax Tree (AST)</strong> walking (~190 files/sec), and isolates dynamic outbound HTTP endpoints. It utilizes a <strong>fully local, privacy-first LLM (gemma3:4b)</strong> running on Ollama to resolve dynamic variables, mapping full system dependency flows into PostgreSQL and Neo4j without modifying a single line of production code.",
+      bullets: [
+        "Engineered high-speed Python AST walker extracting HTTP calls, connection profiles, and client configurations across complex codebases.",
+        "Implemented dynamic variable resolution via local LLM confidence grading, distinguishing deterministic routes from semantic estimates.",
+        "Designed asynchronous task routing using Celery with Redis backend, handling parallel workspace clones and graph updates gracefully.",
+        "Validated analysis across 2,800+ files with zero external API calls or network trace requirements."
+      ],
+      metrics: [
+        { target: 190, suffix: "/s", label: "AST source files parsed" },
+        { target: 0, suffix: "", label: "external network API calls" },
+        { target: 95, suffix: "%+", label: "dynamic route resolution confidence" }
+      ],
+      stack: ["Python", "FastAPI", "Celery", "Redis", "PostgreSQL", "Neo4j", "Ollama", "Docker Compose"],
+      links: [
+        { text: "View on GitHub →", url: "https://github.com/Aravind0403/ServiceScope-v2" }
+      ],
+      hasSim: "servicescope"
     }
   ],
-  research: [
-    {
-      id: "clairvoyant",
-      title: "Clairvoyant Scheduler",
-      status: "In Progress",
-      statusClass: "status-research",
-      desc: "Head-of-Line (HOL) blocking is the silent killer of LLM inference throughput. Long requests monopolise GPU batches — short requests wait, P99 collapses.<br><br>Clairvoyant prevents this by predicting output complexity (Short/Medium/Long) <em>before</em> execution using an <strong>XGBoost Classifier</strong> on lightweight linguistic features. Sitting upstream of vLLM, it enables Shortest-Job-First or priority bin-packing without modifying the core serving engine.",
-      bullets: [
-        "Extracts linguistic features (prompt length, coding keywords, instruction verbs) without invoking an LLM.",
-        "Trained XGBoost model on the ShareGPT dataset with a balanced 2K samples per class to prevent skew.",
-        "Integration phase targeting Vast.ai NVIDIA RTX 4090s with vLLM to benchmark P99 tail latency reduction for short requests.",
-        "Negligible microsecond prediction overhead in the critical path using <code>mlogloss</code> objective ranking."
-      ],
-      stack: ["Go", "ONNX Runtime", "Python", "vLLM", "LLM Serving", "Traffic Shaping"]
-    }
+  researchInterests: [
+    { title: "LLM inference scheduling", desc: "Developing pre-fill and decode phase schedulers that minimize tail latency and optimize chunked pre-fills." },
+    { title: "Queue-aware serving systems", desc: "Constructing scheduling middleware that coordinates with vLLM/TGI batching logic to mitigate head-of-line bottlenecks." },
+    { title: "GPU orchestration", desc: "Building Kubernetes-native custom controllers designed to route burst tasks onto heterogeneous GPU pools dynamically." },
+    { title: "Multi-tenant inference isolation", desc: "Exploring hardware-level and orchestration-level isolation to guarantee compute SLAs for high-priority tenants." },
+    { title: "Predictive workload scheduling", desc: "Leveraging online statistical models to forecast batch complexity and resize dynamic container bounds." },
+    { title: "Kubernetes-native ML infrastructure", desc: "Engineering lightweight schedulers and custom controllers targeting cloud GPU fleets." }
   ],
   writing: [
     {
       icon: "📉",
       meta: "Substack · Distributed Systems",
       title: "Your Scheduler Is Lying to You (And Ants Fixed It)",
-      desc: "Why most schedulers fail under burst load — and how ant colony optimization builds something more resilient.",
+      desc: "An inside analysis of static placement failures under burst load—and why swarm-intelligence algorithms build resilient schedules.",
       url: "https://aravindsundaresan.substack.com/p/your-scheduler-is-lying-to-you-and"
     },
     {
       icon: "🔍",
       meta: "Substack · Static Analysis",
       title: "What Does Your Code Actually Call?",
-      desc: "Walking Python ASTs to find every outbound HTTP call — and why LLMs beat regex for resolving dynamic URLs at scale.",
+      desc: "Walking AST compilation trees to map outbound HTTP requests—and why localized LLM parsing beats regex for dynamic endpoints.",
       url: "https://aravindsundaresan.substack.com/p/what-does-your-code-actually-call"
     },
     {
       icon: "📡",
       meta: "Substack · Infrastructure",
       title: "The $100 Billion Question That Started With 27 Numbers",
-      desc: "On the hidden cost of metadata drift at scale, and why self-healing systems beat runbooks.",
+      desc: "On the operational costs of configuration and metadata drift in microservices, and designing self-healing environments.",
       url: "https://aravindsundaresan.substack.com/p/the-100-billion-question-that-started"
     },
     {
       icon: "✍️",
       meta: "Subscribe · Engineering at Scale",
       title: "All posts on Substack →",
-      desc: "Distributed systems, infra failures, AI-native tooling. Real systems, real failures.",
+      desc: "Distributed systems, infrastructure resilience, and ML systems. Practical designs, real-world failures.",
       url: "https://aravindsundaresan.substack.com"
     }
   ]

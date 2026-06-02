@@ -191,57 +191,64 @@
 
   // ─── DYNAMIC RENDERING ───────────────────────────────────────────────────────
 
-  function initHeroPills() {
-    if (typeof window.portfolioData === 'undefined') return;
-    const pills = document.querySelectorAll('.hero-roles .role-pill');
-    const heroText = document.getElementById('hero-body-text');
-    if (!pills.length || !heroText) return;
+  function initHeroTerminal() {
+    const body = document.getElementById('term-body');
+    if (!body) return;
 
-    let transitionInProgress = false;
+    const lines = [
+      { text: "$ clairvoyant --optimize --engine=vllm", type: "cmd" },
+      { text: "[INFO] Initializing XGBoost prompt complexity classifier...", type: "info" },
+      { text: "[INFO] Loading pre-trained model (ShareGPT balanced corpus)...", type: "info" },
+      { text: "[SUCCESS] XGBoost model loaded. Accuracy: 94.2%. Overhead: <1.2ms.", type: "success" },
+      { text: "[INFO] Hooking upstream serving queue at localhost:8000...", type: "info" },
+      { text: "[INFO] Serving active queue: Shortest-Job-First (SJF) active.", type: "info" },
+      { text: "[SUCCESS] Serving active queue. HOL blocking mitigated.", type: "success" },
+      { text: "[METRIC] P99 short-job latency reduced by 34.2%.", type: "warn" },
+      { text: "[METRIC] Compute cluster efficiency improved: +28.4%.", type: "warn" },
+      { text: "$ aco --balance --cluster=heterogeneous", type: "cmd" },
+      { text: "[INFO] Querying active GPU cluster topology: 2x H100, 2x A100, 4x T4.", type: "info" },
+      { text: "[INFO] Online fit completed in 7.8ms. SLA adherence: 98.2%.", type: "success" }
+    ];
 
-    pills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        // Prevent action if pill is already active or transitioning to avoid glitching/lagging
-        if (pill.classList.contains('active') || transitionInProgress) return;
+    let currentLine = 0;
+    let charIndex = 0;
+    let curElem = null;
 
-        const targetRole = pill.textContent.trim();
-        const nextContent = window.portfolioData.hero[targetRole];
-        if (!nextContent) return;
+    function type() {
+      // Check if element is still in DOM (prevents background memory leak if navigated away)
+      if (!document.getElementById('term-body')) return;
 
-        // Mark active role
-        pills.forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
+      if (currentLine >= lines.length) {
+        setTimeout(() => {
+          body.innerHTML = '';
+          currentLine = 0;
+          charIndex = 0;
+          type();
+        }, 4000);
+        return;
+      }
 
-        // Transition safety guard to lock interactivity during change
-        transitionInProgress = true;
-        
-        // Micro-displacement combined with opacity fade-out
-        heroText.style.opacity = '0';
-        heroText.style.transform = 'translateY(6px)';
+      const lineData = lines[currentLine];
+      
+      if (charIndex === 0) {
+        curElem = document.createElement('div');
+        curElem.className = `term-line ${lineData.type}`;
+        body.appendChild(curElem);
+        body.scrollTop = body.scrollHeight;
+      }
 
-        const onTransitionEnd = (e) => {
-          if (e.propertyName !== 'opacity') return;
-          heroText.removeEventListener('transitionend', onTransitionEnd);
+      if (charIndex < lineData.text.length) {
+        curElem.textContent += lineData.text[charIndex];
+        charIndex++;
+        setTimeout(type, lineData.type === 'cmd' ? 40 : 12);
+      } else {
+        currentLine++;
+        charIndex = 0;
+        setTimeout(type, 750);
+      }
+    }
 
-          // Update content
-          heroText.innerHTML = nextContent;
-
-          // Force reflow/layout tick to ensure browser records updated state before next transition
-          void heroText.offsetHeight;
-
-          // Animate back to original position and opacity
-          heroText.style.opacity = '1';
-          heroText.style.transform = 'translateY(0)';
-          
-          transitionInProgress = false;
-        };
-
-        heroText.addEventListener('transitionend', onTransitionEnd);
-      });
-    });
-
-    // Make transitions smooth for both transform and opacity
-    heroText.style.transition = 'opacity var(--dur) var(--ease), transform var(--dur) var(--ease)';
+    type();
   }
 
   function renderExperience() {
@@ -261,29 +268,33 @@
       const stackHtml = exp.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
 
       html += `
-        <div class="exp-entry">
-          <div class="exp-header">
-            <div class="exp-logo" aria-hidden="true">${exp.logo}</div>
-            <div>
-              <h3>${exp.company}</h3>
+        <div class="exp-entry experience-split">
+          <div class="exp-left">
+            <div class="exp-header">
+              <div class="exp-logo" aria-hidden="true">${exp.logo}</div>
+              <div>
+                <h3 style="font-family: var(--display); font-weight: 700; font-size: 19px;">${exp.company}</h3>
+              </div>
             </div>
+            <div class="exp-role">${exp.role}</div>
+            <div class="exp-period">${exp.period}</div>
+            <ul class="exp-bullets">
+              ${bulletsHtml}
+            </ul>
           </div>
-          <div class="exp-role">${exp.role}</div>
-          <div class="exp-period">${exp.period}</div>
-          <ul class="exp-bullets">
-            ${bulletsHtml}
-          </ul>
-          <div class="project-sub">
-            <div class="project-sub-top">
-              <span class="project-sub-title">${exp.projectTitle}</span>
-              <span class="status-pill ${exp.projectStatus === 'Production' ? 'status-complete' : ''}">${exp.projectStatus}</span>
-            </div>
-            <p class="project-sub-desc">${exp.projectDesc}</p>
-            <div class="metrics-row">
-              ${metricsHtml}
-            </div>
-            <div class="stack-row">
-              ${stackHtml}
+          <div class="exp-right">
+            <div class="project-sub">
+              <div class="project-sub-top">
+                <span class="project-sub-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">${exp.projectTitle}</span>
+                <span class="status-pill ${exp.projectStatus === 'Production' ? 'status-complete' : ''}">${exp.projectStatus}</span>
+              </div>
+              <p class="project-sub-desc">${exp.projectDesc}</p>
+              <div class="metrics-row">
+                ${metricsHtml}
+              </div>
+              <div class="stack-row">
+                ${stackHtml}
+              </div>
             </div>
           </div>
         </div>
@@ -299,50 +310,113 @@
 
     let html = '';
     window.portfolioData.projects.forEach(proj => {
-      const pipelineHtml = proj.pipeline.map((step, i) => `
-        <span class="pipe-step">${step}</span>
-        ${i < proj.pipeline.length - 1 ? `<span class="pipe-arrow">→</span>` : ''}
+      const focusHtml = proj.focus.map(f => `
+        <span class="project-focus-item">${f}</span>
       `).join('');
 
-      const graphDemoHtml = proj.hasGraphDemo ? `
-        <!-- ── LIVE GRAPH DEMO ──────────────────────── -->
-        <div class="graph-demo" role="img" aria-label="Interactive ServiceScope dependency graph demo">
-          <div class="graph-demo-header">
-            <span class="graph-demo-label">// live demo — blast radius analysis</span>
-            <span class="graph-demo-hint">Click any service node to see what breaks</span>
+      // Render simulator canvas placeholder
+      let simWidgetHtml = '';
+      if (proj.hasSim === 'clairvoyant') {
+        simWidgetHtml = `
+          <div class="sys-simulation" id="sim-clairvoyant" role="img" aria-label="Clairvoyant Scheduling Simulation">
+            <div class="sim-header">
+              <span class="sim-label">// SYSTEM SIMULATION — QUEUE TRAFFIC SHAPING</span>
+              <span class="sim-hint">Toggle scheduler mode to optimize P99 latencies</span>
+            </div>
+            <div class="sim-workspace">
+              <div class="sim-controls">
+                <button class="sim-btn active" id="btn-clairvoyant-fifo" data-mode="fifo">FIFO (vLLM Default)</button>
+                <button class="sim-btn" id="btn-clairvoyant-sjf" data-mode="sjf">Clairvoyant (XGBoost SJF)</button>
+              </div>
+              <div class="sim-visuals">
+                <canvas id="canvas-clairvoyant"></canvas>
+              </div>
+              <div class="sim-dashboard">
+                <div class="dash-metric">
+                  <span class="dash-val" id="clairvoyant-p99">0.0s</span>
+                   <span class="dash-lbl">P99 Latency</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="clairvoyant-throughput">0 req/s</span>
+                   <span class="dash-lbl">Throughput</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="clairvoyant-hol">Active</span>
+                   <span class="dash-lbl">HOL Blocking</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <canvas id="serviceGraph" aria-label="Microservice dependency graph — click a node to see blast radius"></canvas>
-          <div class="graph-info-strip" id="graphInfoStrip">
-            <span class="graph-info-text" id="graphInfoText">Select a service to run blast-radius analysis</span>
+        `;
+      } else if (proj.hasSim === 'aco') {
+        simWidgetHtml = `
+          <div class="sys-simulation" id="sim-aco" role="img" aria-label="ACO Cluster Scheduler Simulation">
+            <div class="sim-header">
+              <span class="sim-label">// SYSTEM SIMULATION — HETEROGENEOUS GPU SCHEDULER</span>
+              <span class="sim-hint">Toggle placement algorithm to balance cluster loads</span>
+            </div>
+            <div class="sim-workspace">
+              <div class="sim-controls">
+                <button class="sim-btn active" id="btn-aco-static" data-mode="static">First-Fit (Static)</button>
+                <button class="sim-btn" id="btn-aco-colony" data-mode="colony">ACO Orchestrator</button>
+              </div>
+              <div class="sim-visuals">
+                <canvas id="canvas-aco"></canvas>
+              </div>
+              <div class="sim-dashboard">
+                <div class="dash-metric">
+                  <span class="dash-val" id="aco-util">0%</span>
+                  <span class="dash-lbl">GPU Utilization</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="aco-sla">100%</span>
+                  <span class="dash-lbl">SLA Adherence</span>
+                </div>
+                <div class="dash-metric">
+                  <span class="dash-val" id="aco-time"><1ms</span>
+                  <span class="dash-lbl">Scheduling Cost</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="graph-legend" aria-label="Graph legend">
-            <span class="legend-item">
-              <span class="legend-dot selected" aria-hidden="true"></span>Selected service
-            </span>
-            <span class="legend-item">
-              <span class="legend-dot blast" aria-hidden="true"></span>Downstream (breaks)
-            </span>
-            <span class="legend-item">
-              <span class="legend-dot upstream" aria-hidden="true"></span>Upstream callers
-            </span>
+        `;
+      } else if (proj.hasSim === 'servicescope') {
+        simWidgetHtml = `
+          <div class="graph-demo" role="img" aria-label="Interactive ServiceScope dependency graph demo">
+            <div class="graph-demo-header">
+              <span class="graph-demo-label">// live dependency graph — blast radius resolver</span>
+              <span class="graph-demo-hint">Click any service node to analyze dynamic callers</span>
+            </div>
+            <canvas id="serviceGraph" aria-label="Microservice dependency graph — click a node to see blast radius"></canvas>
+            <div class="graph-info-strip" id="graphInfoStrip">
+              <span class="graph-info-text" id="graphInfoText">Select a service to run blast-radius analysis</span>
+            </div>
+            <div class="graph-legend" aria-label="Graph legend">
+              <span class="legend-item">
+                <span class="legend-dot selected" aria-hidden="true"></span>Selected service
+               </span>
+              <span class="legend-item">
+                <span class="legend-dot blast" aria-hidden="true"></span>Downstream blast radius
+               </span>
+              <span class="legend-item">
+                <span class="legend-dot upstream" aria-hidden="true"></span>Upstream callers
+               </span>
+            </div>
           </div>
-        </div>
-      ` : '';
+        `;
+      }
 
       const bulletsHtml = proj.bullets.map(b => `<li>${b}</li>`).join('');
       
       const metricsHtml = proj.metrics.map(m => {
-        if (m.raw) {
-          return `
-            <div class="m-item">
-              <span class="m-num">${m.prefix||''}${m.target}${m.suffix||''}</span>
-              <span class="m-label">${m.label}</span>
-            </div>
-          `;
-        }
+        const prefix = m.prefix || '';
+        const suffix = m.suffix || '';
+        const decimal = m.decimal !== undefined ? m.decimal : 0;
         return `
           <div class="m-item">
-            <span class="m-num counter" data-target="${m.target}" ${m.suffix ? `data-suffix="${m.suffix}"` : ''} ${m.prefix ? `data-prefix="${m.prefix}"` : ''} ${m.decimal ? `data-decimal="${m.decimal}"` : ''}>${m.prefix||''}${m.target}${m.suffix||''}</span>
+            <span class="m-num counter" data-target="${m.target}" data-suffix="${suffix}" data-prefix="${prefix}" data-decimal="${decimal}">
+              ${prefix}${m.target}${suffix}
+            </span>
             <span class="m-label">${m.label}</span>
           </div>
         `;
@@ -351,31 +425,55 @@
       const stackHtml = proj.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
       
       const linksHtml = proj.links.map(l => `
-        <a href="${l.url}" ${l.url !== '#' ? 'target="_blank" rel="noopener"' : ''} class="p-link ${l.muted ? 'muted' : ''}">${l.text}</a>
+        <a href="${l.url}" target="_blank" rel="noopener" class="p-link">${l.text}</a>
       `).join('');
 
       html += `
         <article class="project-card reveal" aria-labelledby="${proj.id}-heading">
-          <div class="project-card-top">
-            <h3 id="${proj.id}-heading">${proj.title}</h3>
-            <span class="status-pill ${proj.statusClass}">${proj.status}</span>
+          <!-- Top Info Section -->
+          <div class="project-card-header">
+            <div class="project-card-top">
+              <h3 id="${proj.id}-heading" style="font-family: var(--display); font-weight: 700; font-size: 21px; margin-bottom: 2px;">${proj.title}</h3>
+              <span class="status-pill ${proj.statusClass}">${proj.status}</span>
+            </div>
+            <div class="project-subtitle">${proj.subtitle}</div>
+
+            <div class="project-problem">
+              <span class="project-problem-label">Core Systems Bottleneck</span>
+              <p class="project-problem-text">"${proj.problem}"</p>
+            </div>
           </div>
-          <p class="project-card-desc">${proj.desc}</p>
-          <div class="project-pipeline" aria-label="Processing pipeline">
-            ${pipelineHtml}
+          
+          <!-- Full-Width Simulator / Canvas Section -->
+          <div class="project-card-sim">
+            ${simWidgetHtml}
           </div>
-          ${graphDemoHtml}
-          <ul class="project-bullets">
-            ${bulletsHtml}
-          </ul>
-          <div class="metrics-row">
-            ${metricsHtml}
-          </div>
-          <div class="stack-row stack-row--flush">
-            ${stackHtml}
-          </div>
-          <div class="project-links">
-            ${linksHtml}
+
+          <!-- Bottom Two-Column Details Grid -->
+          <div class="project-details-grid">
+            <!-- Left Column: Specs -->
+            <div class="project-details-left">
+              <div class="project-focus" aria-label="Project focus areas">
+                ${focusHtml}
+              </div>
+              <p class="project-card-desc">${proj.desc}</p>
+              <ul class="project-bullets">
+                ${bulletsHtml}
+              </ul>
+            </div>
+
+            <!-- Right Column: Stats & Stack & Links -->
+            <div class="project-details-right">
+              <div class="metrics-row">
+                ${metricsHtml}
+              </div>
+              <div class="stack-row stack-row--flush">
+                ${stackHtml}
+              </div>
+              <div class="project-links">
+                ${linksHtml}
+              </div>
+            </div>
           </div>
         </article>
       `;
@@ -383,30 +481,18 @@
     container.innerHTML = html;
   }
 
-  function renderResearch() {
+  function renderResearchInterests() {
     if (typeof window.portfolioData === 'undefined') return;
-    const container = document.getElementById('research-container');
+    const container = document.getElementById('research-interests-container');
     if (!container) return;
 
     let html = '';
-    window.portfolioData.research.forEach(res => {
-      const bulletsHtml = res.bullets.map(b => `<li>${b}</li>`).join('');
-      const stackHtml = res.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
-
+    window.portfolioData.researchInterests.forEach(interest => {
       html += `
-        <article class="project-card reveal" aria-labelledby="${res.id}-heading">
-          <div class="project-card-top">
-            <h3 id="${res.id}-heading">${res.title}</h3>
-            <span class="status-pill ${res.statusClass}">${res.status}</span>
-          </div>
-          <p class="project-card-desc">${res.desc}</p>
-          <ul class="project-bullets">
-            ${bulletsHtml}
-          </ul>
-          <div class="stack-row">
-            ${stackHtml}
-          </div>
-        </article>
+        <div class="research-card-item">
+          <div class="research-card-title">${interest.title}</div>
+          <div class="research-card-desc">${interest.desc}</div>
+        </div>
       `;
     });
     container.innerHTML = html;
@@ -424,7 +510,7 @@
           <div class="w-icon" aria-hidden="true">${w.icon}</div>
           <div class="w-body">
             <div class="w-meta">${w.meta}</div>
-            <div class="w-title">${w.title}</div>
+            <div class="w-title" style="font-family: var(--display); font-weight: 600; font-size: 14.5px;">${w.title}</div>
             <div class="w-desc">${w.desc}</div>
           </div>
         </a>
@@ -440,10 +526,10 @@
     bindTheme();
     
     // Inject dynamic data before initializing observers
-    initHeroPills();
+    initHeroTerminal();
     renderExperience();
     renderProjects();
-    renderResearch();
+    renderResearchInterests();
     renderWriting();
 
     initMobileNav();
@@ -451,6 +537,11 @@
     initReveal();
     initCounters();
     initAnchorOffset();
+
+    // Boot simulator engines after rendering canvases
+    if (typeof window.initPortfolioSimulations === 'function') {
+      window.initPortfolioSimulations();
+    }
   }
 
   if (document.readyState === 'loading') {
