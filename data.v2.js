@@ -85,7 +85,7 @@ window.portfolioData = {
       hasSim: "clairvoyant",
       name: "Clairvoyant — Predictive SJF Scheduler for LLM Inference",
       tagline: "Eliminates Head-of-Line Blocking in serial LLM backends via ML-driven Shortest-Job-First scheduling.",
-      description: "Serial inference backends (Ollama, llama.cpp) dispatch requests FCFS — short requests queue behind long ones and P50 latency collapses under burst load. Clairvoyant is a Go HTTP sidecar proxy that predicts output token length in 0.029ms using an ONNX-exported XGBoost model, reorders requests via a min-heap priority queue with starvation protection, and reduces short-request P50 latency by 70–76% on RTX 4090 and 68.1% on Apple M1. Validated across 7 public LLM datasets with 62–96% ranking accuracy.",
+      description: "Serial inference backends (Ollama, llama.cpp) dispatch requests FCFS — short requests queue behind long ones and P50 latency collapses under burst load. Clairvoyant is a Go HTTP sidecar proxy that predicts output token length in <strong>0.029ms</strong> using an ONNX-exported <strong>XGBoost model</strong>, reorders requests via a min-heap priority queue with starvation protection, and reduces short-request P50 latency by <strong>70–76%</strong> on RTX 4090 and <strong>68.1%</strong> on Apple M1. Validated across 7 public LLM datasets with <strong>62–96%</strong> ranking accuracy.",
       metrics: [
         "0.029ms prediction latency",
         "70–76% P50 reduction (RTX 4090)",
@@ -107,7 +107,7 @@ window.portfolioData = {
       hasSim: "aco",
       name: "ACO — Adaptive Compute Orchestrator",
       tagline: "GPU Scheduling for Heterogeneous Clusters.",
-      description: "Static cluster placement policies trigger massive fragmentation and compute underutilization on heterogeneous GPU arrays during highly dynamic, multi-tenant burst workloads. ACO combines ant-colony optimization metaheuristics with online LSTM predictors to forecast incoming queue burst times. Dynamic placement decisions are completed in &lt;8ms using two paths: a latency-critical Fast-Path (direct mathematical optimization) and a Full-Colony solver that runs parallel heuristic iterations under burst conditions.",
+      description: "Static cluster placement policies trigger massive fragmentation and compute underutilization on heterogeneous GPU arrays during highly dynamic, multi-tenant burst workloads. ACO combines <strong>ant-colony optimization</strong> metaheuristics with online <strong>LSTM predictors</strong> to forecast incoming queue burst times. Dynamic placement decisions are completed in <strong>&lt;8ms</strong> using two paths: a latency-critical <strong>Fast-Path</strong> (direct mathematical optimization) and a parallel <strong>Full-Colony solver</strong> that runs heuristic iterations under burst conditions.",
       metrics: [
         "<8ms P99 scheduling latency",
         "+28% GPU utilization vs First-Fit",
@@ -123,7 +123,7 @@ window.portfolioData = {
       hasSim: "servicescope",
       name: "ServiceScope",
       tagline: "Developer Infrastructure & Dependency Observability.",
-      description: "Determining operational blast radius inside modular microservices requires heavy runtime tracing or invasive code configurations, leading to unmapped dynamic service calls. ServiceScope checks out a target source repository, parses code hierarchies via Abstract Syntax Tree (AST) walking (~190 files/sec), and isolates dynamic outbound HTTP endpoints. It utilizes a fully local, privacy-first LLM (gemma3:4b) running on Ollama to resolve dynamic variables, mapping full system dependency flows into PostgreSQL and Neo4j without modifying a single line of production code.",
+      description: "Determining operational blast radius inside modular microservices requires heavy runtime tracing or invasive code configurations, leading to unmapped dynamic service calls. ServiceScope checks out a target source repository, parses code hierarchies via <strong>Abstract Syntax Tree (AST)</strong> walking (<strong>~190 files/sec</strong>), and isolates dynamic outbound HTTP endpoints. It utilizes a fully local, privacy-first <strong>LLM (gemma3:4b)</strong> running on Ollama to resolve dynamic variables, mapping full system dependency flows into <strong>PostgreSQL</strong> and <strong>Neo4j</strong> without modifying a single line of production code.",
       metrics: [
         "190/s AST source files parsed",
         "0 external network API calls",

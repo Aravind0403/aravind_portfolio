@@ -383,7 +383,7 @@
       <div class="static-project">
           <h3>Clairvoyant — Predictive SJF Scheduler for LLM Inference</h3>
           <p><em>Eliminates Head-of-Line Blocking in serial LLM backends via ML-driven Shortest-Job-First scheduling.</em></p>
-          <p>Serial inference backends (Ollama, llama.cpp) dispatch requests FCFS — short requests queue behind long ones and P50 latency collapses under burst load. Clairvoyant is a Go HTTP sidecar proxy that predicts output token length in 0.029ms using an ONNX-exported XGBoost model, reorders requests via a min-heap priority queue with starvation protection, and reduces short-request P50 latency by 70–76% on RTX 4090 and 68.1% on Apple M1. Validated across 7 public LLM datasets with 62–96% ranking accuracy.</p>
+          <p>Serial inference backends (Ollama, llama.cpp) dispatch requests FCFS — short requests queue behind long ones and P50 latency collapses under burst load. Clairvoyant is a Go HTTP sidecar proxy that predicts output token length in <strong>0.029ms</strong> using an ONNX-exported <strong>XGBoost model</strong>, reorders requests via a min-heap priority queue with starvation protection, and reduces short-request P50 latency by <strong>70–76%</strong> on RTX 4090 and <strong>68.1%</strong> on Apple M1. Validated across 7 public LLM datasets with <strong>62–96%</strong> ranking accuracy.</p>
           
           <ul>
               <li><strong>Metrics:</strong> 0.029ms prediction latency | 70–76% P50 reduction (RTX 4090) | 68.1% P50 reduction (Apple M1) | 62–96% ranking accuracy</li>
