@@ -317,15 +317,19 @@
     const container = document.getElementById('projects-container');
     if (!container) return;
 
-    let html = '';
-    window.portfolioData.projects.forEach(proj => {
-      const focusHtml = proj.focus.map(f => `
-        <span class="project-focus-item">${f}</span>
-      `).join('');
+    container.innerHTML = '';
+
+    window.portfolioData.projects.forEach(project => {
+      const card = document.createElement('article');
+      card.className = 'project-card reveal';
+      if (project.id) {
+        card.setAttribute('aria-labelledby', `${project.id}-heading`);
+        card.id = `card-${project.id}`;
+      }
 
       // Render simulator canvas placeholder
       let simWidgetHtml = '';
-      if (proj.hasSim === 'clairvoyant') {
+      if (project.hasSim === 'clairvoyant') {
         simWidgetHtml = `
           <div class="sys-simulation" id="sim-clairvoyant" role="img" aria-label="Clairvoyant Scheduling Simulation">
             <div class="sim-header">
@@ -357,7 +361,7 @@
             </div>
           </div>
         `;
-      } else if (proj.hasSim === 'aco') {
+      } else if (project.hasSim === 'aco') {
         simWidgetHtml = `
           <div class="sys-simulation" id="sim-aco" role="img" aria-label="ACO Cluster Scheduler Simulation">
             <div class="sim-header">
@@ -389,7 +393,7 @@
             </div>
           </div>
         `;
-      } else if (proj.hasSim === 'servicescope') {
+      } else if (project.hasSim === 'servicescope') {
         simWidgetHtml = `
           <div class="graph-demo" role="img" aria-label="Interactive ServiceScope dependency graph demo">
             <div class="graph-demo-header">
@@ -415,79 +419,46 @@
         `;
       }
 
-      const bulletsHtml = proj.bullets.map(b => `<li>${b}</li>`).join('');
-      
-      const metricsHtml = proj.metrics.map(m => {
-        const prefix = m.prefix || '';
-        const suffix = m.suffix || '';
-        const decimal = m.decimal !== undefined ? m.decimal : 0;
-        return `
-          <div class="m-item">
-            <span class="m-num counter" data-target="${m.target}" data-suffix="${suffix}" data-prefix="${prefix}" data-decimal="${decimal}">
-              ${prefix}${m.target}${suffix}
-            </span>
-            <span class="m-label">${m.label}</span>
+      // 1. Render Metrics as Badges
+      const metricsHtml = project.metrics ? `
+          <div class="project-metrics">
+              ${project.metrics.map(m => `<span class="metric-badge">${m}</span>`).join('')}
           </div>
-        `;
-      }).join('');
+      ` : '';
 
-      const stackHtml = proj.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
-      
-      const linksHtml = proj.links.map(l => `
-        <a href="${l.url}" target="_blank" rel="noopener" class="p-link">${l.text}</a>
-      `).join('');
-
-      html += `
-        <article class="project-card reveal" aria-labelledby="${proj.id}-heading">
-          <!-- Top Info Section -->
-          <div class="project-card-header">
-            <div class="project-card-top">
-              <h3 id="${proj.id}-heading" style="font-family: var(--display); font-weight: 700; font-size: 21px; margin-bottom: 2px;">${proj.title}</h3>
-              <span class="status-pill ${proj.statusClass}">${proj.status}</span>
-            </div>
-            <div class="project-subtitle">${proj.subtitle}</div>
-
-            <div class="project-problem">
-              <span class="project-problem-label">Core Systems Bottleneck</span>
-              <p class="project-problem-text">"${proj.problem}"</p>
-            </div>
+      // 2. Render Links as Buttons
+      const linksHtml = project.links ? `
+          <div class="project-links-container">
+              ${project.links.map(link => `
+                  <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="project-link-btn">${link.label}</a>
+              `).join('')}
           </div>
-          
-          <!-- Full-Width Simulator / Canvas Section -->
-          <div class="project-card-sim">
-            ${simWidgetHtml}
-          </div>
+      ` : '';
 
-          <!-- Bottom Two-Column Details Grid -->
-          <div class="project-details-grid">
-            <!-- Left Column: Specs -->
-            <div class="project-details-left">
-              <div class="project-focus" aria-label="Project focus areas">
-                ${focusHtml}
-              </div>
-              <p class="project-card-desc">${proj.desc}</p>
-              <ul class="project-bullets">
-                ${bulletsHtml}
-              </ul>
-            </div>
+      // 3. Render vLLM PRs as a separate line
+      const prHtml = project.vllmPRs ? `<p class="vllm-pr-note">${project.vllmPRs}</p>` : '';
 
-            <!-- Right Column: Stats & Stack & Links -->
-            <div class="project-details-right">
-              <div class="metrics-row">
-                ${metricsHtml}
-              </div>
-              <div class="stack-row stack-row--flush">
-                ${stackHtml}
-              </div>
-              <div class="project-links">
-                ${linksHtml}
-              </div>
-            </div>
+      // 4. Render Tags
+      const tagsHtml = project.tags ? `
+          <div class="project-tags">
+              ${project.tags.map(tag => `<span class="tag-chip">${tag}</span>`).join('')}
           </div>
-        </article>
+      ` : '';
+
+      // Combine into the card's innerHTML
+      card.innerHTML = `
+          <h3 class="project-title" ${project.id ? `id="${project.id}-heading"` : ''}>${project.name}</h3>
+          <p class="project-tagline">${project.tagline || ''}</p>
+          <p class="project-description">${project.description}</p>
+          ${simWidgetHtml}
+          ${metricsHtml}
+          ${prHtml}
+          ${tagsHtml}
+          ${linksHtml}
       `;
+
+      container.appendChild(card);
     });
-    container.innerHTML = html;
   }
 
   function renderResearchInterests() {

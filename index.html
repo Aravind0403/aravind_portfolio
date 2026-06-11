@@ -380,7 +380,25 @@
       <h2>Open-Source Projects</h2>
       <p><strong>ServiceScope:</strong> AI-native blast-radius analysis for Python microservices using AST walking and local LLM inference. Python, FastAPI, Celery, PostgreSQL, Neo4j, Ollama, Redis, Docker.</p>
       <p><strong>ACO — Adaptive Compute Orchestrator:</strong> Predictive job scheduler with LSTM per-node predictors and ant-colony optimisation. Python, FastAPI, PyTorch, Asyncio. 202 tests passing.</p>
-      <p><strong>Clairvoyant Scheduler (Research):</strong> XGBoost classifier predicting LLM output complexity to prevent head-of-line blocking in vLLM. Go, ONNX Runtime, Python.</p>
+      <div class="static-project">
+          <h3>Clairvoyant — Predictive SJF Scheduler for LLM Inference</h3>
+          <p><em>Eliminates Head-of-Line Blocking in serial LLM backends via ML-driven Shortest-Job-First scheduling.</em></p>
+          <p>Serial inference backends (Ollama, llama.cpp) dispatch requests FCFS — short requests queue behind long ones and P50 latency collapses under burst load. Clairvoyant is a Go HTTP sidecar proxy that predicts output token length in 0.029ms using an ONNX-exported XGBoost model, reorders requests via a min-heap priority queue with starvation protection, and reduces short-request P50 latency by 70–76% on RTX 4090 and 68.1% on Apple M1. Validated across 7 public LLM datasets with 62–96% ranking accuracy.</p>
+          
+          <ul>
+              <li><strong>Metrics:</strong> 0.029ms prediction latency | 70–76% P50 reduction (RTX 4090) | 68.1% P50 reduction (Apple M1) | 62–96% ranking accuracy</li>
+              <li><strong>Stack:</strong> Go, Python, XGBoost, ONNX Runtime, vLLM, OpenAI-compatible, Kubernetes</li>
+              <li><strong>Open Source:</strong> Open contributor to vLLM v1 core scheduler — PR #41952 (preemption ordering) · PR #44773 (per-request preemption histogram)</li>
+          </ul>
+          
+          <p><strong>Links:</strong> 
+              <a href="https://arxiv.org/abs/2606.07248">arXiv:2606.07248</a> | 
+              <a href="https://github.com/Aravind0403/clairvoyant-scheduler">GitHub</a> | 
+              <a href="https://huggingface.co/Aravind0495/clairvoyant-scheduler">HuggingFace</a> | 
+              <a href="https://github.com/Aravind0403/edge-llm-pipeline">Edge Pipeline</a> | 
+              <a href="https://aravind0403.github.io/runtime-gaps-create-blind-spots/">Blog</a>
+          </p>
+      </div>
       <h2>Core Skills</h2>
       <p>Distributed Systems · Event-Driven Architecture · Concurrency Control · Traffic Shaping · Observability · CI/CD Platforms · Device Orchestration · Platform Reliability · LLM Inference Infrastructure · C# · Java · Python · Go · Azure (Service Bus, Cosmos DB, Functions, ADX) · AWS (EC2, Lambda) · Redis · PostgreSQL · Neo4j · FastAPI · Celery · Docker · Alembic</p>
       <h2>Contact</h2>

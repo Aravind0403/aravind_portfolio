@@ -82,81 +82,57 @@ window.portfolioData = {
   projects: [
     {
       id: "clairvoyant",
-      title: "Clairvoyant",
-      subtitle: "Predictive Scheduling for LLM Inference Workloads",
-      status: "Active ML Systems Research",
-      statusClass: "status-research",
-      problem: "Serial LLM inference engines experience severe head-of-line blocking when short, latency-critical requests get queued behind long-generation documents inside active processing batches.",
-      focus: ["Queue optimization", "Predictive scheduling", "Inference orchestration", "Tail latency reduction"],
-      desc: "An upstream traffic-shaper and priority bin-packer for LLM inference. Rather than modifying the core serving runtime, Clairvoyant sits upstream of the engine and uses an <strong>XGBoost classifier</strong> running on lightweight linguistic features to predict output sequence complexity (Short/Medium/Long) <em>before</em> generation begins. It enables Shortest-Job-First (SJF) and priority allocation, drastically reducing tail latency (P99) for interactive prompts.",
-      bullets: [
-        "Extracts prompt features (instruction tokens, keyword markers, semantic complexity cues) in the critical path with negligible microsecond overhead.",
-        "Trained high-accuracy XGBoost classifier on the ShareGPT corpus using balanced dataset profiles to ensure robust class prediction.",
-        "Engineered Go-based scheduler runtime loading the trained classifier via <strong>ONNX Runtime</strong> for high-throughput batch sorting.",
-        "Mitigates head-of-line blocking in multi-tenant contexts, decreasing short-request tail latency by up to 34% in synthetic workloads."
-      ],
+      hasSim: "clairvoyant",
+      name: "Clairvoyant — Predictive SJF Scheduler for LLM Inference",
+      tagline: "Eliminates Head-of-Line Blocking in serial LLM backends via ML-driven Shortest-Job-First scheduling.",
+      description: "Serial inference backends (Ollama, llama.cpp) dispatch requests FCFS — short requests queue behind long ones and P50 latency collapses under burst load. Clairvoyant is a Go HTTP sidecar proxy that predicts output token length in 0.029ms using an ONNX-exported XGBoost model, reorders requests via a min-heap priority queue with starvation protection, and reduces short-request P50 latency by 70–76% on RTX 4090 and 68.1% on Apple M1. Validated across 7 public LLM datasets with 62–96% ranking accuracy.",
       metrics: [
-        { target: 34, suffix: "%", prefix: "~", label: "P99 short-job latency drop" },
-        { target: 1.2, suffix: "ms", prefix: "<", decimal: 1, label: "inference prediction overhead" },
-        { target: 94.2, suffix: "%", decimal: 1, label: "classification accuracy" }
+        "0.029ms prediction latency",
+        "70–76% P50 reduction (RTX 4090)",
+        "68.1% P50 reduction (Apple M1)",
+        "62–96% ranking accuracy"
       ],
-      stack: ["Go", "ONNX Runtime", "Python", "XGBoost", "vLLM", "Docker", "gRPC"],
       links: [
-        { text: "View on GitHub →", url: "https://github.com/Aravind0403" }
+        { label: "arXiv Paper", url: "https://arxiv.org/abs/2606.07248" },
+        { label: "GitHub", url: "https://github.com/Aravind0403/clairvoyant-scheduler" },
+        { label: "HuggingFace", url: "https://huggingface.co/Aravind0495/clairvoyant-scheduler" },
+        { label: "Edge Pipeline", url: "https://github.com/Aravind0403/edge-llm-pipeline" },
+        { label: "Blog Post", url: "https://aravind0403.github.io/runtime-gaps-create-blind-spots/" }
       ],
-      hasSim: "clairvoyant"
+      tags: ["Go", "Python", "XGBoost", "ONNX Runtime", "vLLM", "OpenAI-compatible", "Kubernetes"],
+      vllmPRs: "Open contributor to vLLM v1 core scheduler — PR #41952 (preemption ordering) · PR #44773 (per-request preemption histogram)"
     },
     {
       id: "aco",
-      title: "ACO — Adaptive Compute Orchestrator",
-      subtitle: "GPU Scheduling for Heterogeneous Clusters",
-      status: "Complete · Open Source",
-      statusClass: "status-complete",
-      problem: "Static cluster placement policies trigger massive fragmentation and compute underutilization on heterogeneous GPU arrays during highly dynamic, multi-tenant burst workloads.",
-      focus: ["Adaptive placement", "Scheduling heuristics", "Runtime-aware orchestration", "SLA-aware compute routing"],
-      desc: "A predictive, decentralized job scheduler that maps variable workloads to heterogeneous GPU clusters. ACO combines ant-colony optimization metaheuristics with <strong>per-node LSTM predictors</strong> to forecast incoming queue burst times. Dynamic placement decisions are completed in <strong>&lt;8ms</strong> using two paths: a latency-critical Fast-Path (direct mathematical optimization) and a Full-Colony solver that runs parallel heuristic iterations under burst conditions.",
-      bullets: [
-        "Developed custom LSTM predictors using real-world Alibaba and Borg cluster telemetry traces, hot-refitting online parameters dynamically.",
-        "Engineered Fast-Path heuristics resolving compute routing in <1ms to preserve sub-millisecond API response limits.",
-        "Implemented Ant Colony Optimization in NumPy, introducing early-stopping metrics after colony state convergence to eliminate overhead.",
-        "Tested scaling reliability using extensive pytest-asyncio suites under extreme synthetic queuing loads."
-      ],
+      hasSim: "aco",
+      name: "ACO — Adaptive Compute Orchestrator",
+      tagline: "GPU Scheduling for Heterogeneous Clusters.",
+      description: "Static cluster placement policies trigger massive fragmentation and compute underutilization on heterogeneous GPU arrays during highly dynamic, multi-tenant burst workloads. ACO combines ant-colony optimization metaheuristics with online LSTM predictors to forecast incoming queue burst times. Dynamic placement decisions are completed in &lt;8ms using two paths: a latency-critical Fast-Path (direct mathematical optimization) and a Full-Colony solver that runs parallel heuristic iterations under burst conditions.",
       metrics: [
-        { target: 8, suffix: "ms", prefix: "<", label: "P99 scheduling latency" },
-        { target: 28, suffix: "%", prefix: "+", label: "GPU utilization vs First-Fit" },
-        { target: 95, suffix: "%+", label: "workload SLA adherence" }
+        "<8ms P99 scheduling latency",
+        "+28% GPU utilization vs First-Fit",
+        "95%+ workload SLA adherence"
       ],
-      stack: ["Python", "FastAPI", "PyTorch LSTM", "NumPy", "Asyncio", "Borg 2019 Traces", "Alibaba 2018 Traces"],
       links: [
-        { text: "View on GitHub →", url: "https://github.com/Aravind0403/ACO_Adaptive_Compute_Orchestrator" }
+        { label: "GitHub", url: "https://github.com/Aravind0403/ACO_Adaptive_Compute_Orchestrator" }
       ],
-      hasSim: "aco"
+      tags: ["Python", "FastAPI", "PyTorch LSTM", "NumPy", "Asyncio", "Borg 2019 Traces", "Alibaba 2018 Traces"]
     },
     {
       id: "servicescope",
-      title: "ServiceScope",
-      subtitle: "Developer Infrastructure & Dependency Observability",
-      status: "Complete · Open Source",
-      statusClass: "status-complete",
-      problem: "Determining operational blast radius inside modular microservices requires heavy runtime tracing or invasive code configurations, leading to unmapped dynamic service calls.",
-      focus: ["AST-based compilation maps", "Observability tooling", "Static analysis", "Automated blast-radius profiling"],
-      desc: "An observability tool providing blast-radius dependency analysis for complex microservice environments. ServiceScope checks out a target source repository, parses code hierarchies via <strong>Abstract Syntax Tree (AST)</strong> walking (~190 files/sec), and isolates dynamic outbound HTTP endpoints. It utilizes a <strong>fully local, privacy-first LLM (gemma3:4b)</strong> running on Ollama to resolve dynamic variables, mapping full system dependency flows into PostgreSQL and Neo4j without modifying a single line of production code.",
-      bullets: [
-        "Engineered high-speed Python AST walker extracting HTTP calls, connection profiles, and client configurations across complex codebases.",
-        "Implemented dynamic variable resolution via local LLM confidence grading, distinguishing deterministic routes from semantic estimates.",
-        "Designed asynchronous task routing using Celery with Redis backend, handling parallel workspace clones and graph updates gracefully.",
-        "Validated analysis across 2,800+ files with zero external API calls or network trace requirements."
-      ],
+      hasSim: "servicescope",
+      name: "ServiceScope",
+      tagline: "Developer Infrastructure & Dependency Observability.",
+      description: "Determining operational blast radius inside modular microservices requires heavy runtime tracing or invasive code configurations, leading to unmapped dynamic service calls. ServiceScope checks out a target source repository, parses code hierarchies via Abstract Syntax Tree (AST) walking (~190 files/sec), and isolates dynamic outbound HTTP endpoints. It utilizes a fully local, privacy-first LLM (gemma3:4b) running on Ollama to resolve dynamic variables, mapping full system dependency flows into PostgreSQL and Neo4j without modifying a single line of production code.",
       metrics: [
-        { target: 190, suffix: "/s", label: "AST source files parsed" },
-        { target: 0, suffix: "", label: "external network API calls" },
-        { target: 95, suffix: "%+", label: "dynamic route resolution confidence" }
+        "190/s AST source files parsed",
+        "0 external network API calls",
+        "95%+ dynamic route resolution confidence"
       ],
-      stack: ["Python", "FastAPI", "Celery", "Redis", "PostgreSQL", "Neo4j", "Ollama", "Docker Compose"],
       links: [
-        { text: "View on GitHub →", url: "https://github.com/Aravind0403/ServiceScope-v2" }
+        { label: "GitHub", url: "https://github.com/Aravind0403/ServiceScope-v2" }
       ],
-      hasSim: "servicescope"
+      tags: ["Python", "FastAPI", "Celery", "Redis", "PostgreSQL", "Neo4j", "Ollama", "Docker Compose"]
     }
   ],
   researchInterests: [
