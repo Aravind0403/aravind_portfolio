@@ -419,6 +419,25 @@
         `;
       }
 
+      // 0. Render Lineage Stepper (origin → paper → deployed extension)
+      let lineageHtml = '';
+      if (project.lineage && project.lineage.length) {
+        const accent = project.lineageAccent || 'var(--accent)';
+        const defaultIdx = project.lineage.length - 1;
+        const pillsHtml = project.lineage.map((stage, i) => `
+            ${i > 0 ? `<div class="lineage-line${i <= defaultIdx ? ' is-past' : ''}"></div>` : ''}
+            <button type="button" class="lineage-pill${i === defaultIdx ? ' active' : ''}" data-project="${project.id}" data-stage="${i}">${stage.tag}</button>
+        `).join('');
+        lineageHtml = `
+          <div class="lineage-stepper" data-project="${project.id}" style="--lineage-accent: ${accent};">
+            <div class="lineage-pills">${pillsHtml}</div>
+            <div class="lineage-panel" id="lineage-panel-${project.id}">
+              ${renderLineagePanelInner(project.lineage[defaultIdx])}
+            </div>
+          </div>
+        `;
+      }
+
       // 1. Render Metrics as Badges
       const metricsHtml = project.metrics ? `
           <div class="project-metrics">
@@ -445,11 +464,15 @@
           </div>
       ` : '';
 
+      // 5. Unified-repo badge (ServiceScope: paper + deployable system live together)
+      const badgeHtml = project.unifiedBadge ? `<span class="unified-badge">${project.unifiedBadge}</span>` : '';
+
       // Combine into the card's innerHTML
       card.innerHTML = `
-          <h3 class="project-title" ${project.id ? `id="${project.id}-heading"` : ''}>${project.name}</h3>
+          <h3 class="project-title" ${project.id ? `id="${project.id}-heading"` : ''}>${project.name}${badgeHtml}</h3>
           <p class="project-tagline">${project.tagline || ''}</p>
           <p class="project-description">${project.description}</p>
+          ${lineageHtml}
           ${simWidgetHtml}
           ${metricsHtml}
           ${prHtml}
@@ -458,6 +481,50 @@
       `;
 
       container.appendChild(card);
+    });
+
+    bindLineageSteppers(container);
+  }
+
+  // ─── LINEAGE STEPPER ─────────────────────────────────────────────────────────
+
+  function renderLineagePanelInner(stage) {
+    const metricsHtml = (stage.metrics && stage.metrics.length) ? `
+      <div class="lineage-metrics">
+        ${stage.metrics.map(m => `<span><span class="lineage-metric-val">${m.value}</span><span class="lineage-metric-lbl">${m.label}</span></span>`).join('')}
+      </div>
+    ` : '';
+    const linkHtml = stage.link ? `<a class="lineage-panel-link" href="${stage.link.url}" target="_blank" rel="noopener noreferrer">${stage.link.label}</a>` : '';
+    return `
+      <div class="lineage-panel-label">${stage.label}</div>
+      <div class="lineage-panel-title">${stage.title}</div>
+      <p class="lineage-panel-desc">${stage.desc}</p>
+      ${metricsHtml}
+      ${linkHtml}
+    `;
+  }
+
+  function bindLineageSteppers(container) {
+    container.querySelectorAll('.lineage-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const projectId = btn.dataset.project;
+        const stageIdx = parseInt(btn.dataset.stage, 10);
+        const project = window.portfolioData.projects.find(p => p.id === projectId);
+        if (!project || !project.lineage) return;
+
+        const stepper = container.querySelector(`.lineage-stepper[data-project="${projectId}"]`);
+        if (!stepper) return;
+
+        stepper.querySelectorAll('.lineage-pill').forEach((p, i) => {
+          p.classList.toggle('active', i === stageIdx);
+        });
+        stepper.querySelectorAll('.lineage-line').forEach((line, i) => {
+          line.classList.toggle('is-past', i < stageIdx);
+        });
+
+        const panel = document.getElementById(`lineage-panel-${projectId}`);
+        if (panel) panel.innerHTML = renderLineagePanelInner(project.lineage[stageIdx]);
+      });
     });
   }
 

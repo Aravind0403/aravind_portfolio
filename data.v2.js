@@ -85,54 +85,96 @@ window.portfolioData = {
       hasSim: "clairvoyant",
       name: "Clairvoyant — Predictive SJF Scheduler for LLM Inference",
       tagline: "Eliminates Head-of-Line Blocking in serial LLM backends via ML-driven Shortest-Job-First scheduling.",
-      description: "Serial inference backends (Ollama, llama.cpp) dispatch requests FCFS — short requests queue behind long ones and P50 latency collapses under burst load. Clairvoyant is a Go HTTP sidecar proxy that predicts output token length in <strong>0.029ms</strong> using an ONNX-exported <strong>XGBoost model</strong>, reorders requests via a min-heap priority queue with starvation protection, and reduces short-request P50 latency by <strong>70–76%</strong> on RTX 4090 and <strong>68.1%</strong> on Apple M1. Validated across 7 public LLM datasets with <strong>62–96%</strong> ranking accuracy.",
-      metrics: [
-        "0.029ms prediction latency",
-        "70–76% P50 reduction (RTX 4090)",
-        "68.1% P50 reduction (Apple M1)",
-        "62–96% ranking accuracy"
+      description: "One idea, taken from an observed production pain point to a published result to independent hardware validation. Click through the stages below — the live queue simulation underneath reflects the deployed scheduler.",
+      lineageAccent: "var(--accent)",
+      lineage: [
+        {
+          tag: "Production Insight",
+          label: "ORIGIN",
+          title: "FCFS head-of-line blocking in serial LLM backends",
+          desc: "Serial inference runtimes (Ollama, llama.cpp) dispatch strictly first-come-first-served — one long request stalls every short one behind it, and no existing runtime reorders the queue.",
+          metrics: [],
+          link: null
+        },
+        {
+          tag: "arXiv Paper",
+          label: "PUBLISHED RESEARCH · arXiv:2606.07248",
+          title: "Clairvoyant: Admission-Layer Scheduling for Serial LLM Backends",
+          desc: "A Go HTTP sidecar predicts output length in 0.029ms via an ONNX-exported XGBoost model, then reorders the queue with a min-heap SJF policy and starvation protection — no changes to the backend.",
+          metrics: [
+            { value: "70–76%", label: "P50 reduction, RTX 4090" },
+            { value: "0.029ms", label: "prediction latency" },
+            { value: "62–96%", label: "ranking accuracy" }
+          ],
+          link: { label: "Read the paper →", url: "https://arxiv.org/abs/2606.07248" }
+        },
+        {
+          tag: "Edge Validation",
+          label: "REPRODUCTION STUDY · edge-llm-pipeline",
+          title: "Same scheduler, reproduced end-to-end on a 16GB M1",
+          desc: "A full end-to-end pipeline — LoRA fine-tuning (Qwen2.5 1.5B student distilled from Llama3.1 8B teacher) through Clairvoyant serving benchmark — run entirely on constrained hardware (16GB Apple M1), validating that the scheduling mechanism holds outside the original RTX 4090 environment.",
+          metrics: [
+            { value: "68.1%", label: "P50 reduction, M1 16GB" },
+            { value: "1.5B ← 8B", label: "LoRA student ← teacher" },
+            { value: "16GB", label: "constrained hardware, full pipeline" }
+          ],
+          link: { label: "View edge-llm-pipeline →", url: "https://github.com/Aravind0403/edge-llm-pipeline" }
+        }
       ],
-      links: [
-        { label: "arXiv Paper", url: "https://arxiv.org/abs/2606.07248" },
-        { label: "GitHub", url: "https://github.com/Aravind0403/clairvoyant-scheduler" },
-        { label: "HuggingFace", url: "https://huggingface.co/Aravind0495/clairvoyant-scheduler" },
-        { label: "Edge Pipeline", url: "https://github.com/Aravind0403/edge-llm-pipeline" },
-        { label: "Blog Post", url: "https://aravind0403.github.io/runtime-gaps-create-blind-spots/" }
-      ],
-      tags: ["Go", "Python", "XGBoost", "ONNX Runtime", "vLLM", "OpenAI-compatible", "Kubernetes"],
+      tags: ["Go", "Python", "XGBoost", "ONNX Runtime", "vLLM", "OpenAI-compatible"],
       vllmPRs: "Open contributor to vLLM v1 core scheduler — PR #41952 (preemption ordering) · PR #44773 (per-request preemption histogram)"
     },
     {
       id: "aco",
       hasSim: "aco",
-      name: "ACO — Adaptive Compute Orchestrator",
+      name: "ACO → PheroSched — Adaptive Compute Orchestrator, in Production",
       tagline: "GPU Scheduling for Heterogeneous Clusters.",
-      description: "Static cluster placement policies trigger massive fragmentation and compute underutilization on heterogeneous GPU arrays during highly dynamic, multi-tenant burst workloads. ACO combines <strong>ant-colony optimization</strong> metaheuristics with online <strong>LSTM predictors</strong> to forecast incoming queue burst times. Dynamic placement decisions are completed in <strong>&lt;8ms</strong> using two paths: a latency-critical <strong>Fast-Path</strong> (direct mathematical optimization) and a parallel <strong>Full-Colony solver</strong> that runs heuristic iterations under burst conditions.",
-      metrics: [
-        "<8ms P99 scheduling latency",
-        "+28% GPU utilization vs First-Fit",
-        "95%+ workload SLA adherence"
+      description: "Started as trace-simulated research; the same core engine now runs unmodified inside a real Kubernetes scheduler extender. Click through the stages below — the live simulation underneath shows the placement algorithm itself.",
+      lineageAccent: "var(--accent-warm)",
+      lineage: [
+        {
+          tag: "Research (HiPC 2026)",
+          label: "TRACE-SIMULATED RESEARCH · HiPC 2026 submission",
+          title: "Ant-colony optimization + LSTM burst prediction for heterogeneous GPU clusters",
+          desc: "Static placement policies fragment heterogeneous GPU arrays under bursty multi-tenant load. ACO pairs an ant-colony metaheuristic with online LSTM predictors, validated on Alibaba 2018 and OpenB GPU traces.",
+          metrics: [
+            { value: "89.2%", label: "EMA routing accuracy vs 75.4% LSTM" },
+            { value: "<8ms", label: "placement decision time" },
+            { value: "7 GPU types", label: "$0.45–$3.20/GPU-hr modeled" }
+          ],
+          link: { label: "View research repo →", url: "https://github.com/Aravind0403/ACO_Adaptive_Compute_Orchestrator" }
+        },
+        {
+          tag: "PheroSched — Platform",
+          label: "DEPLOYED SYSTEM · Kubernetes scheduler extender",
+          title: "PheroSched: the algorithm as a real cluster scheduler",
+          desc: "The same core engine, unchanged, wired into a FastAPI Kubernetes scheduler extender with Prometheus/Grafana observability — deployable locally or to GKE GPU node pools via documented Terraform provisioning.",
+          metrics: [
+            { value: "28.6%", label: "cluster cost reduction" },
+            { value: "97.4%", label: "QoS compliance" },
+            { value: "<0.75ms", label: "P99 scheduling latency" }
+          ],
+          link: { label: "View PheroSched →", url: "https://github.com/Aravind0403/ACO_Platform_Extension" }
+        }
       ],
-      links: [
-        { label: "GitHub", url: "https://github.com/Aravind0403/ACO_Adaptive_Compute_Orchestrator" }
-      ],
-      tags: ["Python", "FastAPI", "PyTorch LSTM", "NumPy", "Asyncio", "Borg 2019 Traces", "Alibaba 2018 Traces"]
+      tags: ["Python", "FastAPI", "PyTorch LSTM", "NumPy", "Asyncio", "Kubernetes", "Terraform", "Prometheus"]
     },
     {
       id: "servicescope",
       hasSim: "servicescope",
+      unifiedBadge: "ONE REPO — RESEARCH + DEPLOYABLE SYSTEM",
       name: "ServiceScope",
-      tagline: "Developer Infrastructure & Dependency Observability.",
-      description: "Determining operational blast radius inside modular microservices requires heavy runtime tracing or invasive code configurations, leading to unmapped dynamic service calls. ServiceScope checks out a target source repository, parses code hierarchies via <strong>Abstract Syntax Tree (AST)</strong> walking (<strong>~190 files/sec</strong>), and isolates dynamic outbound HTTP endpoints. It utilizes a fully local, privacy-first <strong>LLM (gemma3:4b)</strong> running on Ollama to resolve dynamic variables, mapping full system dependency flows into <strong>PostgreSQL</strong> and <strong>Neo4j</strong> without modifying a single line of production code.",
+      tagline: "Pre-Deployment Blast Radius Prediction.",
+      description: "Determining which services break before a deploy currently requires heavy runtime tracing or invasive instrumentation. ServiceScope statically analyses a target repository via polyglot Abstract Syntax Tree extraction across five languages (Python, Go, Java, TypeScript, C#) using Tree-sitter, then links dynamic call sites to Kubernetes deployment manifests, Helm charts, and Docker Compose files — resolving 96.6% of inter-service dependencies deterministically in 121ms, without runtime instrumentation or agents. A confidence-weighted blast radius is computed via log-space Dijkstra traversal, validated against 15 historical PRs from Google's microservices-demo with correct per-service sizing.",
       metrics: [
-        "190/s AST source files parsed",
-        "0 external network API calls",
-        "95%+ dynamic route resolution confidence"
+        "F1 = 1.000 on 18-service system",
+        "96.6% dependencies resolved at 121ms",
+        "<500ms CI pipeline stage"
       ],
       links: [
         { label: "GitHub", url: "https://github.com/Aravind0403/ServiceScope-v2" }
       ],
-      tags: ["Python", "FastAPI", "Celery", "Redis", "PostgreSQL", "Neo4j", "Ollama", "Docker Compose"]
+      tags: ["Python", "Go", "Java", "TypeScript", "C#", "Tree-sitter", "Kubernetes", "Helm", "Docker Compose"]
     }
   ],
   researchInterests: [
